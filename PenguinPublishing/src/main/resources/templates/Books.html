@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xlmns:th=" https://www.thymeleaf.org">
+<head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<meta charset="ISO-8859-1">
+<title>PenguinBooks</title>
+</head>
+<body>
+	<div class="container">
+		<div class="card" style="width: 18rem;">
+			<img src="..." class="card-img-top" alt="...">
+			<div class="card-body">
+				<h5 class="card-title dark"  th:text="${Work.authorweb}"></h5>
+				<p class="card-text">
+				 
+				 <p><span th:text="${Work.titleshort}"></span></p>
+				 
+				<!--  <p><span th:text="${Work.titleSubtitleAuth}"></span></p> -->
+				 
+				 <p><span th:text="${Work.titles}"></span></p>
+				 
+				 <p><span th:text="${Work.onsaledate}"></span></p>
+				 
+				 <p><span th:text="${Work.titleshort}"></span></p>
+				</p>
+				<a  href="#" class="btn btn-primary">Go somewhere</a>
+			</div>
+		</div>
+		<br>
+		<h4 th:text="${Work.titleshort}" />
+		<br>
+
+		<h4 th:text="${Work.onsaledate}" />
+
+	</div>
+</body>
+</html>
