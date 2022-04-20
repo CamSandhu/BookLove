@@ -1,48 +1,31 @@
 <!DOCTYPE html>
 <html xlmns:th=" https://www.thymeleaf.org">
 <head>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-<!-- jQuery library -->
+<link th:href="@{/main.css}" rel="stylesheet" />
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+	integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+	crossorigin="anonymous"></script>
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+	integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+	crossorigin="anonymous"></script>
 
 <meta charset="ISO-8859-1">
 <title>PenguinBooks</title>
 </head>
 <body>
-	<div class="container">
-		<div class="card" style="width: 18rem;">
-			<img src="..." class="card-img-top" alt="...">
-			<div class="card-body">
-				<h5 class="card-title dark"  th:text="${Work.authorweb}"></h5>
-				<p class="card-text">
-				 
-				 <p><span th:text="${Work.titleshort}"></span></p>
-				 
-				<!--  <p><span th:text="${Work.titleSubtitleAuth}"></span></p> -->
-				 
-				 <p><span th:text="${Work.titles}"></span></p>
-				 
-				 <p><span th:text="${Work.onsaledate}"></span></p>
-				 
-				 <p><span th:text="${Work.titleshort}"></span></p>
-				</p>
-				<a  href="#" class="btn btn-primary">Go somewhere</a>
-			</div>
-		</div>
-		<br>
-		<h4 th:text="${Work.titleshort}" />
-		<br>
 
-		<h4 th:text="${Work.onsaledate}" />
+<div class="container">
 
-	</div>
+<p th:text="${AuthorLast}">
+
+
+</p>
+
+
+</div>
+
 </body>
 </html>
