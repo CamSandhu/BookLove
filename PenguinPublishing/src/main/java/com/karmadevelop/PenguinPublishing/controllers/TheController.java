@@ -43,10 +43,10 @@ public class TheController {
 		
 	}
 	
-	@GetMapping("/Book/{isbn}")
-	public String FetchBookISBN(@PathVariable Long isbn , Model model) throws IOException, InterruptedException {
+	@GetMapping("/Book")
+	public String FetchBookISBN(@RequestParam Long workID , Model model) throws IOException, InterruptedException {
 		
-		model =model.addAttribute("Book" , allRequests.fetchBook(isbn));
+		model =model.addAttribute("Book" , allRequests.fetchBook(workID));
 				
 		return "Books";
 		

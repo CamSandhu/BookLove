@@ -17,15 +17,18 @@
 </head>
 <body>
 
-<div class="container">
+	<div class="container">
 
-<p th:text="${AuthorLast}">
+		<h6 th:text="${Book.title}"></h6>
+		<h6 th:text="${Book.pages}"></h6>
+		<h6 th:text="${Book.authorName}"></h6>
+		<h6 th:text="${Book.isbn}"></h6>
+		<h6 th:text="${Book.workid}"></h6>
+
+		<img th:src="${Book.photoSource}"/>
 
 
-</p>
-
-
-</div>
+	</div>
 
 </body>
 </html>

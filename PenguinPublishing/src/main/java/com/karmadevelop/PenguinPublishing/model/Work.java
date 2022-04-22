@@ -1,5 +1,6 @@
 package com.karmadevelop.PenguinPublishing.model;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,23 +18,12 @@ public class Work {
 
 	private String titleAuth;
 
-	//private String titles;
+	// private String titles;
 
 	private String authorweb;
-    
+
 	private String workid;
-	
-	private List<Long> ISBNS;
-	
-	
 
-	public List<Long> getISBNS() {
-		return ISBNS;
-	}
-
-	public void setISBNS(List<Long> iSBNS) {
-		ISBNS = iSBNS;
-	}
 
 	public Work() {
 		super();
@@ -51,7 +41,7 @@ public class Work {
 		this.onsaledate = onsaledate;
 		this.titleSubtitleAuth = titleSubtitleAuth;
 		this.titleAuth = titleAuth;
-		//this.titles = titles;
+		// this.titles = titles;
 		this.authorweb = authorweb;
 		this.workid = workid;
 	}
@@ -121,5 +111,4 @@ public class Work {
 				+ ", workid=" + workid + "]";
 	}
 
-	
 }

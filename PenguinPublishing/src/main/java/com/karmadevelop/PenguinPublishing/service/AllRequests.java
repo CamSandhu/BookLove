@@ -26,6 +26,7 @@ import javax.annotation.PostConstruct;
 import org.apache.catalina.mapper.Mapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jackson.JsonObjectDeserializer;
@@ -34,6 +35,7 @@ import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.servlet.FrameworkServlet;
 
 import com.fasterxml.jackson.annotation.JsonKey;
+import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,7 +44,6 @@ import com.karmadevelop.PenguinPublishing.dataValidation.DAtaValidation;
 import com.karmadevelop.PenguinPublishing.model.Author;
 import com.karmadevelop.PenguinPublishing.model.Book;
 import com.karmadevelop.PenguinPublishing.model.Work;
-
 
 @Service
 public class AllRequests {
@@ -129,26 +130,7 @@ public class AllRequests {
 			if (jObject.get("works") == "")
 				continue;
 
-			else if (jObject.get("titles") == "")
-				continue;
-
-			JSONObject titles = (JSONObject) jObject.get("titles");
-
-			// System.out.println(titles);
-
 			JSONObject works = (JSONObject) jObject.get("works");
-
-			String[] isbns = titles.get("isbn").toString().replaceAll("\\[", "").replaceAll("]", "")
-					.replaceAll("[{-}]", "").replaceAll("\"", "").split(",");
-
-			List<String> iSbns = Arrays.stream(isbns).filter(n -> !(n.contains("contributortype"))).toList();
-
-			iSbns = iSbns.stream().map(n -> n.replaceAll("[content:]", "")).toList();
-
-			List<BigInteger> ISBNS = new ArrayList<>();
-
-			for (String isbn : iSbns)
-				ISBNS.add(new BigInteger(isbn));
 
 			String[] workIds = works.get("works").toString().replaceAll("\\[", "").replaceAll("]", "").split(",");
 
@@ -157,11 +139,7 @@ public class AllRequests {
 			// getting all the Works related to the workIds
 			for (String workid : workIds) {
 
-				Work work = FetchWork(Integer.parseInt(workid));
-
-				// work.setISBNS(ISBNS);
-
-				WorkIds.add(work);
+				WorkIds.add(FetchWork(Integer.parseInt(workid)));
 			}
 
 			authors.add(mapper.readValue(jsonArray.get(i).toString(), Author.class));
@@ -179,9 +157,9 @@ public class AllRequests {
 	}
 
 	// fetch Books data
-	public Book fetchBook(Long isbn) throws IOException, InterruptedException {
+	public Book fetchBook(Long workID) throws IOException, InterruptedException {
 
-		String ISBN_DATA_URL = "https://reststop.randomhouse.com/resources/titles/" + isbn + "/";
+		String ISBN_DATA_URL = "https://reststop.randomhouse.com/resources/titles?workid=" + workID;
 
 		HttpClient client = HttpClient.newHttpClient();
 
@@ -197,16 +175,26 @@ public class AllRequests {
 
 		System.out.println(json);
 
-		json = json.getJSONObject("title");
-
-		System.out.println(json);
+		json = json.getJSONObject("titles");
 
 		ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-		Book book = mapper.readValue(json.toString(), Book.class);
+		Book book = new Book();
 
+		if (json.has("title") && json.toString().contains("\"title\":[")) {
+			book = mapper.readValue(json.getJSONArray("title").get(0).toString(), Book.class);
+		} else if (json.has("title")) {
+
+			book = mapper.readValue(json.getJSONObject("title").toString(), Book.class);
+
+			return book;
+		}
+
+		else {
+			book.setTitle("there is no info about this book");
+			return book;
+		}
 		return book;
-
 	}
 
 	public String fetchBooks(String keyword) throws IOException, InterruptedException {
