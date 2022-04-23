@@ -39,7 +39,7 @@ public class TheController {
 		
 		model =model.addAttribute("Authors" , allRequests.FetchAuthors(lastName));
 				
-		return "Authors";
+		return "index";
 		
 	}
 	
@@ -48,7 +48,7 @@ public class TheController {
 		
 		model =model.addAttribute("Book" , allRequests.fetchBook(workID));
 				
-		return "Books";
+		return "index";
 		
 	}
 	
@@ -60,7 +60,7 @@ public class TheController {
 		
 		model.addAttribute("AuthorLast",    allRequests.fetchBooks( keyword));
 		
-		return "Books";
+		return "index";
 	}
 	
 	/*
