@@ -1,6 +1,5 @@
 package com.karmadevelop.PenguinPublishing.controllers;
 
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -19,50 +18,50 @@ import com.karmadevelop.PenguinPublishing.service.AllRequests;
 
 @Controller
 public class TheController {
-    
+
 	@Autowired
 	private AllRequests allRequests;
-	
+
 	@GetMapping("/work/{id}")
 	public String fetchBooks(@PathVariable int id, Model model) throws IOException, InterruptedException {
-		
-		model =model.addAttribute("Work" , allRequests.FetchWork(id));
-				
+
+		model = model.addAttribute("Work", allRequests.FetchWork(id));
+
 		return "Books";
-		
+
 	}
-	
-	
-	//fetch all authors
+
+	// fetch all authors
 	@GetMapping("/author")
-	public String FetchAuthor(@RequestParam(name="lastName") String lastName,Model model) throws IOException, InterruptedException {
+	public String FetchAuthor(@RequestParam(name = "authorName") String authorName, Model model)
+			throws IOException, InterruptedException {
 		
-		model =model.addAttribute("Authors" , allRequests.FetchAuthors(lastName));
-				
+		
+		model = model.addAttribute("Authors", allRequests.FetchAuthors(authorName.trim()));
 		return "index";
-		
+
 	}
-	
+
 	@GetMapping("/Book")
-	public String FetchBookISBN(@RequestParam Long workID , Model model) throws IOException, InterruptedException {
-		
-		model =model.addAttribute("Book" , allRequests.fetchBook(workID));
-				
+	public String FetchBookISBN(@RequestParam Long workID, Model model) throws IOException, InterruptedException {
+
+		model = model.addAttribute("Book", allRequests.fetchBook(workID));
+
 		return "index";
-		
+
 	}
-	
 
 	@GetMapping("/bookDisplay")
-	public String fetchBookPicture(@RequestParam Map<String,String> allParams,  Model model) throws IOException, InterruptedException {
-		
-		String keyword=allParams.get("lastName")+"%20" +allParams.get("title").replaceAll("\\s", "");
-		
-		model.addAttribute("AuthorLast",    allRequests.fetchBooks( keyword));
-		
+	public String fetchBookPicture(@RequestParam Map<String, String> allParams, Model model)
+			throws IOException, InterruptedException {
+
+		String keyword = allParams.get("lastName") + "%20" + allParams.get("title").replaceAll("\\s", "");
+
+		model.addAttribute("AuthorLast", allRequests.fetchBooks(keyword));
+
 		return "index";
 	}
-	
+
 	/*
 	 * @GetMapping("/bookISBN") public String fetchBookISBNS(Model model) throws
 	 * IOException, InterruptedException {
@@ -72,5 +71,5 @@ public class TheController {
 	 * 
 	 * return "Books"; }
 	 */
-	
+
 }

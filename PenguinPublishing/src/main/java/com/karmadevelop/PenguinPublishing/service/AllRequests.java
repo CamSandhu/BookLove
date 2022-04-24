@@ -89,15 +89,27 @@ public class AllRequests {
 	}
 
 	// method to fetch an author
-	public List<Author> FetchAuthors(String lastName) throws IOException, InterruptedException {
+	public List<Author> FetchAuthors(String authorName) throws IOException, InterruptedException {
 
-		if (lastName.contains(" ")) {
-			int index = lastName.indexOf(' ');
-			lastName = lastName.substring(index + 1);
+		String PENGUIN_AUTHORS_URL = null;
+		String firstName = null;
+		String lastName = null;
+
+		if (authorName.trim().contains(" ")) {
+
+			String[] str = authorName.split(" ");
+			firstName = str[0];
+			lastName = str[1];
+			System.out.println(firstName + " " + lastName);
+
+			PENGUIN_AUTHORS_URL = "https://reststop.randomhouse.com/resources/authors?firstName=" + firstName
+					+ "&lastName=" + lastName;
 		}
 
-		// creating url object
-		String PENGUIN_AUTHORS_URL = "https://reststop.randomhouse.com/resources/authors?lastName=" + lastName;
+		else if (!authorName.trim().contains(" ")) {
+
+			PENGUIN_AUTHORS_URL = "https://reststop.randomhouse.com/resources/authors?firstName=" + authorName;
+		}
 
 		// creating http client
 		HttpClient client = HttpClient.newHttpClient();
@@ -110,6 +122,26 @@ public class AllRequests {
 
 		// parsing xml to json
 		JSONObject json = XML.toJSONObject(response.body().toString());
+
+		System.out.println(json);
+
+		if (!json.toString().contains("\"author\":")) {
+			PENGUIN_AUTHORS_URL = "https://reststop.randomhouse.com/resources/authors?lastName=" + authorName;
+
+			// creating http client
+			client = HttpClient.newHttpClient();
+
+			// create request Object
+			request = HttpRequest.newBuilder().uri(URI.create(PENGUIN_AUTHORS_URL)).build();
+
+			// execute the request
+			response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+			// parsing xml to json
+			json = XML.toJSONObject(response.body().toString());
+
+		}
+		System.out.println(json);
 
 		// reaching the author array in json
 		JSONArray jsonArray = json.getJSONObject("authors").getJSONArray("author");

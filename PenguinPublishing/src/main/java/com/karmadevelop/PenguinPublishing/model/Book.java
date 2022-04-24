@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Book {
 
 	private String isbn;
-	
+
 	@JsonProperty("titleweb")
 	private String title;
 
@@ -18,6 +18,26 @@ public class Book {
 	private String pages;
 
 	private String workid;
+
+	private int priceusa;
+
+	private int pricecanada;
+
+	public int getPriceusa() {
+		return priceusa;
+	}
+
+	public void setPriceusa(int priceusa) {
+		this.priceusa = priceusa;
+	}
+
+	public int getPricecanada() {
+		return pricecanada;
+	}
+
+	public void setPricecanada(int pricecanada) {
+		this.pricecanada = pricecanada;
+	}
 
 	public String getIsbn() {
 		return isbn;
@@ -86,6 +106,5 @@ public class Book {
 		return "Book [isbn=" + isbn + ", title=" + title + ", photoSource=" + photoSource + ", authorName=" + authorName
 				+ ", pages=" + pages + ", workid=" + workid + "]";
 	}
-	
 
 }
