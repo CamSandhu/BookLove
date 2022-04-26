@@ -12,32 +12,45 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.karmadevelop.PenguinPublishing.service.AllRequests;
+import com.karmadevelop.PenguinPublishing.service.AllServices;
+import com.karmadevelop.PenguinPublishing.service.FetchAuthors;
+import com.karmadevelop.PenguinPublishing.service.FetchBook;
+import com.karmadevelop.PenguinPublishing.service.FetchWork;
 
 @Controller
 public class TheController {
 
 	@Autowired
-	private AllRequests allRequests;
+	private FetchAuthors fetchAuthors;
 
-	@GetMapping("/work/{id}")
-	public String fetchBooks(@PathVariable int id, Model model) throws IOException, InterruptedException {
+	@Autowired
+	private FetchBook fetchBook;
 
-		model = model.addAttribute("Work", allRequests.FetchWork(id));
+	/*
+	 * @RequestMapping("/") public String index() { return "index"; }
+	 */
 
-		return "Books";
-
-	}
+	/*
+	 * @GetMapping("/work/{id}") public String fetchBooks(@PathVariable int id,
+	 * Model model) throws IOException, InterruptedException {
+	 * 
+	 * model = model.addAttribute("Work", fetchWork.fetchWork(id));
+	 * 
+	 * return "Books";
+	 * 
+	 * }
+	 */
 
 	// fetch all authors
 	@GetMapping("/author")
 	public String FetchAuthor(@RequestParam(name = "authorName") String authorName, Model model)
 			throws IOException, InterruptedException {
-		
-		
-		model = model.addAttribute("Authors", allRequests.FetchAuthors(authorName.trim()));
+
+		model = model.addAttribute("Authors", fetchAuthors.fetchAuthors(authorName.trim()));
 		return "index";
 
 	}
@@ -45,27 +58,26 @@ public class TheController {
 	@GetMapping("/Book")
 	public String FetchBookISBN(@RequestParam Long workID, Model model) throws IOException, InterruptedException {
 
-		model = model.addAttribute("Book", allRequests.fetchBook(workID));
+		model = model.addAttribute("Book", fetchBook.fetchBook(workID));
 
 		return "index";
 
-	}
-
-	@GetMapping("/bookDisplay")
-	public String fetchBookPicture(@RequestParam Map<String, String> allParams, Model model)
-			throws IOException, InterruptedException {
-
-		String keyword = allParams.get("lastName") + "%20" + allParams.get("title").replaceAll("\\s", "");
-
-		model.addAttribute("AuthorLast", allRequests.fetchBooks(keyword));
-
-		return "index";
 	}
 
 	/*
+	 * @GetMapping("/bookDisplay") public String fetchBookPicture(@RequestParam
+	 * Map<String, String> allParams, Model model) throws IOException,
+	 * InterruptedException {
+	 * 
+	 * String keyword = allParams.get("lastName") + "%20" +
+	 * allParams.get("title").replaceAll("\\s", "");
+	 * 
+	 * model.addAttribute("AuthorLast", allRequests.fetchBooks(keyword));
+	 * 
+	 * return "index"; }
+	 * 
 	 * @GetMapping("/bookISBN") public String fetchBookISBNS(Model model) throws
 	 * IOException, InterruptedException {
-	 * 
 	 * 
 	 * model.addAttribute("AuthorLast", allRequests.fetchBooks());
 	 * 
