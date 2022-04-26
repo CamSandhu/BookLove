@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'PenguinPublishers'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A7F7B623537049D88726EDA9E586CE5C }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C0C31F6E05574529894C8894720890B7 }}
           package: '*.jar'
