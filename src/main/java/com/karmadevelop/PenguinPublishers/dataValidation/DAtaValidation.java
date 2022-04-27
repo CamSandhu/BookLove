@@ -1,4 +1,4 @@
-package com.karmadevelop.PenguinPublishing.dataValidation;
+package com.karmadevelop.PenguinPublishers.dataValidation;
 
 import org.springframework.stereotype.Component;
 

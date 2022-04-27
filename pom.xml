@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.karmadevelop</groupId>
-	<artifactId>PenguinPublishing</artifactId>
+	<artifactId>PenguinPublishers</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>PenguinPublishing</name>
+	<name>PenguinPublishers</name>
 	<description>A project made in spring boot which can be used to lookfor books published by penguin </description>
 	<properties>
 		<java.version>11</java.version>

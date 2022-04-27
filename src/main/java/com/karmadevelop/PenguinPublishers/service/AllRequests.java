@@ -1,4 +1,4 @@
-package com.karmadevelop.PenguinPublishing.service;
+package com.karmadevelop.PenguinPublishers.service;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -40,10 +40,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.karmadevelop.PenguinPublishing.dataValidation.DAtaValidation;
-import com.karmadevelop.PenguinPublishing.model.Author;
-import com.karmadevelop.PenguinPublishing.model.Book;
-import com.karmadevelop.PenguinPublishing.model.Work;
+import com.karmadevelop.PenguinPublishers.dataValidation.DAtaValidation;
+import com.karmadevelop.PenguinPublishers.model.Author;
+import com.karmadevelop.PenguinPublishers.model.Book;
+import com.karmadevelop.PenguinPublishers.model.Work;
 
 @Service
 public class AllRequests {

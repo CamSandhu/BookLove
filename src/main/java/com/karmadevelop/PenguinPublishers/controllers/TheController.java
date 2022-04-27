@@ -1,4 +1,4 @@
-package com.karmadevelop.PenguinPublishing.controllers;
+package com.karmadevelop.PenguinPublishers.controllers;
 
 import java.io.IOException;
 import java.net.URI;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.karmadevelop.PenguinPublishing.service.AllRequests;
-import com.karmadevelop.PenguinPublishing.service.AllServices;
-import com.karmadevelop.PenguinPublishing.service.FetchAuthors;
-import com.karmadevelop.PenguinPublishing.service.FetchBook;
-import com.karmadevelop.PenguinPublishing.service.FetchWork;
+import com.karmadevelop.PenguinPublishers.service.AllRequests;
+import com.karmadevelop.PenguinPublishers.service.AllServices;
+import com.karmadevelop.PenguinPublishers.service.FetchAuthors;
+import com.karmadevelop.PenguinPublishers.service.FetchBook;
+import com.karmadevelop.PenguinPublishers.service.FetchWork;
 
 @Controller
 public class TheController {

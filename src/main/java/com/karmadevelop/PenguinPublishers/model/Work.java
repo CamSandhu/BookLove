@@ -1,4 +1,4 @@
-package com.karmadevelop.PenguinPublishing.model;
+package com.karmadevelop.PenguinPublishers.model;
 
 import java.math.BigInteger;
 import java.util.List;

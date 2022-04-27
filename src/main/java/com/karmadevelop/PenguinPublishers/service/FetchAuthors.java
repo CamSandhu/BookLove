@@ -1,4 +1,4 @@
-package com.karmadevelop.PenguinPublishing.service;
+package com.karmadevelop.PenguinPublishers.service;
 
 import java.io.IOException;
 import java.net.URI;
@@ -19,9 +19,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.karmadevelop.PenguinPublishing.model.Author;
-import com.karmadevelop.PenguinPublishing.model.Book;
-import com.karmadevelop.PenguinPublishing.model.Work;
+import com.karmadevelop.PenguinPublishers.model.Author;
+import com.karmadevelop.PenguinPublishers.model.Book;
+import com.karmadevelop.PenguinPublishers.model.Work;
 
 @Service
 public class FetchAuthors {
