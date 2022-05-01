@@ -5,11 +5,15 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.catalina.util.URLEncoder;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -19,23 +23,26 @@ import com.karmadevelop.PenguinPublishers.model.Book;
 import com.karmadevelop.PenguinPublishers.model.Work;
 
 @Service
-public class FetchBook  {
+public class FetchBook {
+
+	@Autowired
+	private HttpConnect connect;
+
 	// fetch Books data
-	public Book fetchBook(Long workID) throws IOException, InterruptedException {
+	public Book fetchBook(String workID) throws IOException, InterruptedException {
+
+		String[] params = workID.trim().split("/");
+
+		workID = params[0];
+
+		String title = params[1].replaceAll(" ", "%20");
+
+		String authorName = params[2].replaceAll(" ", "%20");
 
 		String ISBN_DATA_URL = "https://reststop.randomhouse.com/resources/titles?workid=" + workID;
 
-		HttpClient client = HttpClient.newHttpClient();
-
-		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(ISBN_DATA_URL)).build();
-
-		HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-		// getting the response body
-		String xml = response.body().toString();
-
 		// converting xml to jsonObject
-		JSONObject json = XML.toJSONObject(xml);
+		JSONObject json = connect.Connect(ISBN_DATA_URL);
 
 		System.out.println(json);
 
@@ -54,13 +61,50 @@ public class FetchBook  {
 			return book;
 		}
 
+///////////////using the google api		
 		else {
-			book.setTitle("there is no info about this book");
+
+			json = connect.Connect("https://www.googleapis.com/books/v1/volumes?q=" + title + "+" + authorName
+					+ ":keyes&key=AIzaSyAYVbSJ2sLh0xKtL0kBI4HEhPkUjvCmn54");
+
+			if (json.get("items") instanceof JSONArray) {
+
+				JSONArray bookInfoArray = (JSONArray) json.get("items");
+
+				JSONObject oneBookObject = (JSONObject) bookInfoArray.get(0);
+
+				System.out.println(oneBookObject.get("volumeInfo"));
+
+				JSONObject volumeinfo = (JSONObject) oneBookObject.get("volumeInfo");
+
+				// setting title
+				if (volumeinfo.has("title"))
+					book.setTitle((String) volumeinfo.get("title"));
+
+				// getting the isbn
+				JSONArray isbnArray = volumeinfo.getJSONArray("industryIdentifiers");
+
+				JSONObject isbn = (JSONObject) isbnArray.get(0);
+
+				// setting isbn
+				if (isbn.has("identifier"))
+					book.setIsbn((String) (isbn.get("identifier")));
+
+				JSONObject imageLinkObject = volumeinfo.getJSONObject("imageLinks");
+
+				if (imageLinkObject.has("thumbnail"))
+					book.setPhotoSource(imageLinkObject.get("thumbnail").toString());
+
+				if (volumeinfo.has("pageCount"))
+					book.setPages(Integer.toString((Integer) volumeinfo.get("pageCount")));
+
+				System.out.println(book.toString());
+
+			}
+
 			return book;
 		}
 		return book;
 	}
-
-
 
 }

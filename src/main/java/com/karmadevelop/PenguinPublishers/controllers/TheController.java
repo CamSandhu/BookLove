@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.karmadevelop.PenguinPublishers.service.AllRequests;
-import com.karmadevelop.PenguinPublishers.service.AllServices;
 import com.karmadevelop.PenguinPublishers.service.FetchAuthors;
 import com.karmadevelop.PenguinPublishers.service.FetchBook;
 import com.karmadevelop.PenguinPublishers.service.FetchWork;
 
-@Controller
+@RestController
 public class TheController {
 
 	@Autowired
@@ -30,9 +31,12 @@ public class TheController {
 	@Autowired
 	private FetchBook fetchBook;
 
-	/*
-	 * @RequestMapping("/") public String index() { return "index"; }
-	 */
+	@RequestMapping("/")
+	public ModelAndView index(ModelAndView mav) {
+		mav.setViewName("index");
+
+		return mav;
+	}
 
 	/*
 	 * @GetMapping("/work/{id}") public String fetchBooks(@PathVariable int id,
@@ -47,20 +51,22 @@ public class TheController {
 
 	// fetch all authors
 	@GetMapping("/author")
-	public String FetchAuthor(@RequestParam(name = "authorName") String authorName, Model model)
+	public ModelAndView FetchAuthor(@RequestParam(name = "authorName") String authorName, ModelAndView mav)
 			throws IOException, InterruptedException {
 
-		model = model.addAttribute("Authors", fetchAuthors.fetchAuthors(authorName.trim()));
-		return "index";
+		mav.addObject("Authors", fetchAuthors.fetchAuthors(authorName.trim())).setViewName("index");
+
+		return mav;
 
 	}
 
 	@GetMapping("/Book")
-	public String FetchBookISBN(@RequestParam Long workID, Model model) throws IOException, InterruptedException {
+	public ModelAndView FetchBookISBN(@RequestParam String workID, ModelAndView mav)
+			throws IOException, InterruptedException {
 
-		model = model.addAttribute("Book", fetchBook.fetchBook(workID));
+		mav.addObject("Book", fetchBook.fetchBook(workID)).setViewName("index");
 
-		return "index";
+		return mav;
 
 	}
 

@@ -29,6 +29,9 @@ public class FetchAuthors {
 	@Autowired
 	private FetchWork fetchWork;
 
+	@Autowired
+	private HttpConnect connect;
+
 	// method to fetch an author
 	public List<Author> fetchAuthors(String authorName) throws JSONException, IOException, InterruptedException {
 
@@ -47,42 +50,33 @@ public class FetchAuthors {
 					+ "&lastName=" + lastName;
 		}
 
+////////// checking if it is only the first name or the last name
 		else if (!authorName.trim().contains(" ")) {
 
 			PENGUIN_AUTHORS_URL = "https://reststop.randomhouse.com/resources/authors?firstName=" + authorName;
 		}
 
-		// creating http client
-		HttpClient client = HttpClient.newHttpClient();
+		HttpClient client;
+		HttpRequest request;
+		HttpResponse response;
 
-		// create request Object
-		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(PENGUIN_AUTHORS_URL)).build();
-
-		// execute the request
-		HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-		// parsing xml to json
-		JSONObject json = XML.toJSONObject(response.body().toString());
+		// using the HTTP connection defined in HttpConnect class
+		JSONObject json = connect.Connect(PENGUIN_AUTHORS_URL);
 
 		System.out.println(json);
 
+/////////// checking if the json sent back with first name does not contain the authors
+		// info and knowing it is the last name
 		if (!json.toString().contains("\"author\":")) {
 			PENGUIN_AUTHORS_URL = "https://reststop.randomhouse.com/resources/authors?lastName=" + authorName;
 
-			// creating http client
-			client = HttpClient.newHttpClient();
-
-			// create request Object
-			request = HttpRequest.newBuilder().uri(URI.create(PENGUIN_AUTHORS_URL)).build();
-
-			// execute the request
-			response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-			// parsing xml to json
-			json = XML.toJSONObject(response.body().toString());
+			json = connect.Connect(PENGUIN_AUTHORS_URL);
 
 		}
 
+		
+		
+		
 		System.out.println(json.length() + "  " + json);
 
 		// creating the mapper object
@@ -95,7 +89,10 @@ public class FetchAuthors {
 
 		JSONObject jsontest = (JSONObject) json.get("authors");
 
-		// mapping fora single author
+		
+		
+		
+//////////// mapping for a single author
 		if (jsontest.get("author") instanceof JSONObject) {
 
 			JSONObject json1 = (JSONObject) json.get("authors");
@@ -125,6 +122,10 @@ public class FetchAuthors {
 
 		}
 
+		
+		
+		
+///////////////// mapping for an Array of authors
 		else {
 			// reaching the author array in json
 			JSONArray jsonArray = json.getJSONObject("authors").getJSONArray("author");
@@ -161,6 +162,8 @@ public class FetchAuthors {
 			}
 
 		}
+		
+		
 		return authors;
 
 	}

@@ -10,6 +10,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -19,33 +20,23 @@ import com.karmadevelop.PenguinPublishers.model.Book;
 import com.karmadevelop.PenguinPublishers.model.Work;
 
 @Service
-public class FetchWork  {
+public class FetchWork {
+
+	@Autowired
+	private HttpConnect connect;
 
 	public Work fetchWork(int id) throws IOException, InterruptedException {
 
 		String BOOKS_TITLE_URL = "https://reststop.randomhouse.com/resources/works/" + id + "/";
 
-		// creating client object
-		HttpClient client = HttpClient.newHttpClient();
-
-		// creating an request object
-		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(BOOKS_TITLE_URL)).build();
-
-		// executing the request
-		HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-		// HttpResponse response =
-		// client.sendAsync(request,HttpResponse.BodyHandlers.ofString())
-
-		// getting body from response to string
-		String xml = response.body().toString();
 
 		// converting XML to json
-		JSONObject json = XML.toJSONObject(xml);
+		JSONObject json = connect.Connect(BOOKS_TITLE_URL);
 
 		// getting the work keyword from the array
 		json = json.getJSONObject("work");
 
-		// System.out.println(json);
+		 System.out.println(json);
 
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -57,7 +48,5 @@ public class FetchWork  {
 
 		return work;
 	}
-
-
 
 }
