@@ -69,36 +69,47 @@ public class FetchBook {
 
 			if (json.get("items") instanceof JSONArray) {
 
-				JSONArray bookInfoArray = (JSONArray) json.get("items");
+				JSONArray bookInfoArray = new JSONArray();
 
-				JSONObject oneBookObject = (JSONObject) bookInfoArray.get(0);
+				if (json.has("items")) {
+					bookInfoArray = (JSONArray) json.get("items");
+				} else
+					return book = null;
 
-				System.out.println(oneBookObject.get("volumeInfo"));
+				for (int i = 0; i < bookInfoArray.length(); i++) {
 
-				JSONObject volumeinfo = (JSONObject) oneBookObject.get("volumeInfo");
+					if (bookInfoArray.get(i).toString().contains(params[1])) {
 
-				// setting title
-				if (volumeinfo.has("title"))
-					book.setTitle((String) volumeinfo.get("title"));
+						JSONObject oneBookObject = (JSONObject) bookInfoArray.get(i);
 
-				// getting the isbn
-				JSONArray isbnArray = volumeinfo.getJSONArray("industryIdentifiers");
+						System.out.println(oneBookObject.get("volumeInfo"));
 
-				JSONObject isbn = (JSONObject) isbnArray.get(0);
+						JSONObject volumeinfo = (JSONObject) oneBookObject.get("volumeInfo");
 
-				// setting isbn
-				if (isbn.has("identifier"))
-					book.setIsbn((String) (isbn.get("identifier")));
+						// setting title
+						if (volumeinfo.has("title"))
+							book.setTitle((String) volumeinfo.get("title"));
 
-				JSONObject imageLinkObject = volumeinfo.getJSONObject("imageLinks");
+						// getting the isbn
+						JSONArray isbnArray = volumeinfo.getJSONArray("industryIdentifiers");
 
-				if (imageLinkObject.has("thumbnail"))
-					book.setPhotoSource(imageLinkObject.get("thumbnail").toString());
+						JSONObject isbn = (JSONObject) isbnArray.get(0);
 
-				if (volumeinfo.has("pageCount"))
-					book.setPages(Integer.toString((Integer) volumeinfo.get("pageCount")));
+						// setting isbn
+						if (isbn.has("identifier"))
+							book.setIsbn((String) (isbn.get("identifier")));
 
-				System.out.println(book.toString());
+						JSONObject imageLinkObject = volumeinfo.getJSONObject("imageLinks");
+
+						if (imageLinkObject.has("thumbnail"))
+							book.setPhotoSource(imageLinkObject.get("thumbnail").toString());
+
+						if (volumeinfo.has("pageCount"))
+							book.setPages(Integer.toString((Integer) volumeinfo.get("pageCount")));
+
+						System.out.println(book.toString());
+					}
+				}
 
 			}
 
