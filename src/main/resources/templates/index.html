@@ -39,7 +39,7 @@
 
 
 
-		<div class="col col-lg-6  offset-lg-3   mt-4  ">
+		<div class="col col-lg-6  offset-lg-3   mt-4  " id="searchDiv">
 
 			<form th:action="@{/author}">
 				<div class="row">
@@ -56,11 +56,12 @@
 
 		<!-- --------------------------------------Book info display------------------------------------------------ -->
 
-		<div th:if="${Book!=null}" class="col col-lg-6 offset-lg-3   mt-4">
+		<div th:if="${Book!=null}" id="bookDiv"
+			class="col col-lg-6 offset-lg-3   mt-4 border p-4 rounded ">
 			<div class="row">
 
 				<div class="col ">
-					<img class="img-fluid  mx-auto img-thumbnail"
+					<img id="image" class="img-fluid  img-thumbnail"
 						th:src="${Book.photoSource}" />
 				</div>
 
@@ -100,9 +101,10 @@
 
 
 
+
 		<!-- --------------------------------------Authors display------------------------------------------------ -->
 
-		<div th:if="${Authors!=null}"
+		<div th:if="${Authors!=null}" id="authorDiv"
 			class="card mt-5 col col-lg-6 offset-lg-3   pl-0 pr-0"
 			th:each="Author :${Authors}">
 			<div class="card-header h6" th:text="${Author.authordisplay}"></div>
