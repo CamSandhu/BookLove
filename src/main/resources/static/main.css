@@ -8,6 +8,7 @@ body {
 	background-repeat: no-repeat; /* Do not repeat the image */
 	/* Resize the background image to cover the entire container */
 	z-index: -1;
+	background-attachment: fixed;
 }
 
 #bookDiv, #searchDiv, #authorDiv {
