@@ -74,9 +74,6 @@ public class FetchAuthors {
 
 		}
 
-		
-		
-		
 		System.out.println(json.length() + "  " + json);
 
 		// creating the mapper object
@@ -89,9 +86,6 @@ public class FetchAuthors {
 
 		JSONObject jsontest = (JSONObject) json.get("authors");
 
-		
-		
-		
 //////////// mapping for a single author
 		if (jsontest.get("author") instanceof JSONObject) {
 
@@ -122,9 +116,6 @@ public class FetchAuthors {
 
 		}
 
-		
-		
-		
 ///////////////// mapping for an Array of authors
 		else {
 			// reaching the author array in json
@@ -162,8 +153,10 @@ public class FetchAuthors {
 			}
 
 		}
-		
-		
+
+		if (authors.isEmpty())
+			return null;
+
 		return authors;
 
 	}

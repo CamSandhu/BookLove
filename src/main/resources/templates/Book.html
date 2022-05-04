@@ -60,45 +60,53 @@
 		</div>
 
 
-		<!-- --------------------------------------Authors display------------------------------------------------ -->
+		<!-- --------------------------------------Book info display------------------------------------------------ -->
 
-		<div th:if="${Authors!=null}" id="authorDiv"
-			class="card mt-5 col-sm-10 offset-sm-1 col-lg-6 offset-lg-3   pl-0 pr-0"
-			th:each="Author :${Authors}">
-			<div class="card-header h6" th:text="${Author.authordisplay}"></div>
-			<div class="card-body">
-				<h5 class="card-title"></h5>
-				<p class="card-text" th:if="${Author.spotlight!=null}"
-					th:text="${Author.spotlight}"></p>
-				<p class="card-text text-danger"
-					th:if="${Author.spotlight==null}">Unfortunately we don't
-					have spotlight about this author</p>
+		<div th:if="${Book!=null}" id="bookDiv"
+			class="col col-lg-6 offset-lg-3   mt-4 border p-4 rounded ">
+			<div class="row">
 
-
-				<!-- --------------------------------------------dropDown--------------------------		 -->
-
-				<div class="dropdown show">
-					<a class="btn btn-light dropdown-toggle" href="#" role="button"
-						id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false"> Books</a>
-
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-						<a class="dropdown-item"
-							th:href="@{/Book(workID=${workId.workid}+'/'+${workId.titleweb}+'/'+${Author.authordisplay})}"
-							th:each="workId :${Author.workIDS}" th:text="${workId.titleweb}"></a>
-					</div>
+				<div class="col ">
+					<img id="image" class="img-fluid  img-thumbnail"
+						th:src="${Book.photoSource}" />
 				</div>
 
+				<div class="col ">
+					<h6 class="mb-0">Title</h6>
+					<p class="text-muted" th:text="${Book.title}?: 'N/A'"></p>
+
+					<h6 class="mb-0">Pages</h6>
+					<p class="text-muted" th:if="${Book.pages!=0}"
+						th:text="${Book.pages}"></p>
+					<p class="text-muted" th:if="${Book.pages==0}" th:text="${'N/A'}"></p>
+
+					<h6 class="mb-0">Author</h6>
+					<p class="text-muted" th:text="${Book.authorName}?: 'N/A'"></p>
+
+					<h6 class="mb-0">ISBN</h6>
+					<p class="text-muted" th:text="${Book.isbn}"></p>
+
+					<h6 class="mb-0">Price in USA</h6>
+					<p class="text-muted" th:if="${Book.priceusa!=0}"
+						th:text="${'$'+Book.priceusa}"></p>
+					<p class="text-muted" th:if="${Book.priceusa==0}"
+						th:text="${'N/A'}"></p>
+
+					<h6 class="mb-0">Price in Canada</h6>
+					<p class="text-muted" th:if="${Book.pricecanada!=0}"
+						th:text="${'$'+Book.pricecanada}"></p>
+					<p class="text-muted" th:if="${Book.pricecanada==0}"
+						th:text="${'N/A'}"></p>
+
+				</div>
+
+
 			</div>
-
-
 		</div>
 
-		<div th:if="${Authors==null}"
+		<div th:if="${Book==null}"
 			class="alert alert-warning card mt-5 col-sm-10 offset-sm-1 col-lg-6 offset-lg-3 ">Unfortunately
-			we don't have information about this author</div>
-
+			we don't have information about this volume</div>
 	</div>
-
 </body>
 </html>

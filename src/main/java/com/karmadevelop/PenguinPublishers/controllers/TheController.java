@@ -64,7 +64,7 @@ public class TheController {
 	public ModelAndView FetchBookISBN(@RequestParam String workID, ModelAndView mav)
 			throws IOException, InterruptedException {
 
-		mav.addObject("Book", fetchBook.fetchBook(workID)).setViewName("index");
+		mav.addObject("Book", fetchBook.fetchBook(workID)).setViewName("Book");
 
 		return mav;
 

@@ -112,9 +112,13 @@ public class FetchBook {
 				}
 
 			}
+			if (book.getTitle() == null)
+				book = null;
 
 			return book;
 		}
+		if (book.getTitle() == null)
+			book = null;
 		return book;
 	}
 
