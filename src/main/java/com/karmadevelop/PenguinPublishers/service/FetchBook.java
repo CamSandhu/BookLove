@@ -67,51 +67,52 @@ public class FetchBook {
 			json = connect.Connect("https://www.googleapis.com/books/v1/volumes?q=" + title + "+" + authorName
 					+ ":keyes&key=AIzaSyAYVbSJ2sLh0xKtL0kBI4HEhPkUjvCmn54");
 
-			if (json.get("items") instanceof JSONArray) {
+			if (json.has("items"))
+				if (json.get("items") instanceof JSONArray) {
 
-				JSONArray bookInfoArray = new JSONArray();
+					JSONArray bookInfoArray = new JSONArray();
 
-				if (json.has("items")) {
 					bookInfoArray = (JSONArray) json.get("items");
-				} else
-					return book = null;
 
-				for (int i = 0; i < bookInfoArray.length(); i++) {
+					for (int i = 0; i < bookInfoArray.length(); i++) {
 
-					if (bookInfoArray.get(i).toString().contains(params[1])) {
+						if (bookInfoArray.get(i).toString().contains(params[1])) {
 
-						JSONObject oneBookObject = (JSONObject) bookInfoArray.get(i);
+							JSONObject oneBookObject = (JSONObject) bookInfoArray.get(i);
 
-						System.out.println(oneBookObject.get("volumeInfo"));
+							System.out.println(oneBookObject.get("volumeInfo"));
 
-						JSONObject volumeinfo = (JSONObject) oneBookObject.get("volumeInfo");
+							JSONObject volumeinfo = (JSONObject) oneBookObject.get("volumeInfo");
 
-						// setting title
-						if (volumeinfo.has("title"))
-							book.setTitle((String) volumeinfo.get("title"));
+							// setting title
+							if (volumeinfo.has("title"))
+								book.setTitle((String) volumeinfo.get("title"));
 
-						// getting the isbn
-						JSONArray isbnArray = volumeinfo.getJSONArray("industryIdentifiers");
+							JSONArray isbnArray = new JSONArray();
 
-						JSONObject isbn = (JSONObject) isbnArray.get(0);
+							// getting the isbn
+							if (volumeinfo.has("industryIdentifiers"))
+								isbnArray = volumeinfo.getJSONArray("industryIdentifiers");
 
-						// setting isbn
-						if (isbn.has("identifier"))
-							book.setIsbn((String) (isbn.get("identifier")));
+							JSONObject isbn = (JSONObject) isbnArray.get(0);
 
-						JSONObject imageLinkObject = volumeinfo.getJSONObject("imageLinks");
+							// setting isbn
+							if (isbn.has("identifier"))
+								book.setIsbn((String) (isbn.get("identifier")));
 
-						if (imageLinkObject.has("thumbnail"))
-							book.setPhotoSource(imageLinkObject.get("thumbnail").toString());
+							JSONObject imageLinkObject = volumeinfo.getJSONObject("imageLinks");
 
-						if (volumeinfo.has("pageCount"))
-							book.setPages(Integer.toString((Integer) volumeinfo.get("pageCount")));
+							if (imageLinkObject.has("thumbnail"))
+								book.setPhotoSource(imageLinkObject.get("thumbnail").toString());
 
-						System.out.println(book.toString());
+							if (volumeinfo.has("pageCount"))
+								book.setPages(Integer.toString((Integer) volumeinfo.get("pageCount")));
+
+							System.out.println(book.toString());
+						}
 					}
-				}
 
-			}
+				}
 			if (book.getTitle() == null)
 				book = null;
 

@@ -38,21 +38,21 @@ public class FetchAuthors {
 		String PENGUIN_AUTHORS_URL = null;
 		String firstName = null;
 		String lastName = null;
+		ObjectMapper mapper = new ObjectMapper();// creating the mapper object
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		List<Author> authors = new ArrayList<>();// intilizing list to fill with the Author class objects
 
 		if (authorName.trim().contains(" ")) {
-
 			String[] str = authorName.split(" ");
 			firstName = str[0];
 			lastName = str[1];
 			System.out.println(firstName + " " + lastName);
-
 			PENGUIN_AUTHORS_URL = "https://reststop.randomhouse.com/resources/authors?firstName=" + firstName
 					+ "&lastName=" + lastName;
 		}
 
 ////////// checking if it is only the first name or the last name
 		else if (!authorName.trim().contains(" ")) {
-
 			PENGUIN_AUTHORS_URL = "https://reststop.randomhouse.com/resources/authors?firstName=" + authorName;
 		}
 
@@ -60,54 +60,27 @@ public class FetchAuthors {
 		HttpRequest request;
 		HttpResponse response;
 
-		// using the HTTP connection defined in HttpConnect class
-		JSONObject json = connect.Connect(PENGUIN_AUTHORS_URL);
+		JSONObject json = connect.Connect(PENGUIN_AUTHORS_URL);// using the HTTP connection defined in HttpConnect class
 
-		System.out.println(json);
-
-/////////// checking if the json sent back with first name does not contain the authors
-		// info and knowing it is the last name
+/////////// checking if the json sent back with first name does not contain the authors info and knowing it is the last name
 		if (!json.toString().contains("\"author\":")) {
 			PENGUIN_AUTHORS_URL = "https://reststop.randomhouse.com/resources/authors?lastName=" + authorName;
-
 			json = connect.Connect(PENGUIN_AUTHORS_URL);
-
 		}
 
-		System.out.println(json.length() + "  " + json);
-
-		// creating the mapper object
-		ObjectMapper mapper = new ObjectMapper();
-
-		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-		// intilizing list to fill with the Author class objects
-		List<Author> authors = new ArrayList<>();
-
-		JSONObject jsontest = (JSONObject) json.get("authors");
-
 //////////// mapping for a single author
-		if (jsontest.get("author") instanceof JSONObject) {
-
-			JSONObject json1 = (JSONObject) json.get("authors");
-
+		if (((JSONObject) json.get("authors")).get("author") instanceof JSONObject) {
+			JSONObject json1 = ((JSONObject) json.get("authors"));
 			authors.add(mapper.readValue(json1.get("author").toString(), Author.class));
-
 			json1 = (JSONObject) json1.get("author");
-
 			JSONObject works = (JSONObject) json1.get("works");
-
 			String[] workIds = works.get("works").toString().replaceAll("\\[", "").replaceAll("]", "").split(",");
-
 			List<Work> WorkIds = new ArrayList<>();
 
-			// getting all the Works related to the workIds
+/////////// getting all the Works related to the workIds
 			for (String workid : workIds) {
-
 				WorkIds.add(fetchWork.fetchWork(Integer.parseInt(workid)));
-
 			}
-
 			authors.get(0).setWorkIDS(WorkIds);
 
 			if (authors.get(0).getSpotlight() != null)
@@ -127,22 +100,20 @@ public class FetchAuthors {
 
 				JSONObject jObject = (JSONObject) jsonArray.get(i);
 
-				if (jObject.get("works") == "")
-					continue;
-
-				JSONObject works = (JSONObject) jObject.get("works");
-
-				String[] workIds = works.get("works").toString().replaceAll("\\[", "").replaceAll("]", "").split(",");
-
 				List<Work> WorkIds = new ArrayList<>();
 
-				// getting all the Works related to the workIds
-				for (String workid : workIds) {
+				if (jObject.get("works") != "") {
+					String[] workIds = ((JSONObject) jObject.get("works")).get("works").toString().replaceAll("\\[", "")
+							.replaceAll("]", "").split(",");
 
-					WorkIds.add(fetchWork.fetchWork(Integer.parseInt(workid)));
+					// getting all the Works related to the workIds
 
+					for (String workid : workIds) {
+						if (workid != "")
+							WorkIds.add(fetchWork.fetchWork(Integer.parseInt(workid)));
+
+					}
 				}
-
 				authors.add(mapper.readValue(jsonArray.get(i).toString(), Author.class));
 
 				authors.get(authors.size() - 1).setWorkIDS(WorkIds);
