@@ -3,47 +3,33 @@ package com.karmadevelop.PenguinPublishers.model;
 import java.util.Arrays;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Author {
 
-	private Long authorid;
+	@JsonProperty("key")
+	private String authorid;
 
+	@JsonProperty("name")
 	private String authordisplay;
 
-	private String spotlight;
+	@JsonProperty("work_count")
+	private int workCount;
 
-	private List<Work> workIDS;
-	
-	private String authorlast;
+	@JsonProperty("birth_date")
+	private String DOB;
+
+	@JsonProperty("death_date")
+	private String DOD;
+
+	@JsonProperty("top_work")
+	private String topWork;
+
+	@JsonProperty("top_subjects")
+	private List<String> works;
 
 	public Author() {
 		super();
-	}
-
-
-	public String getAuthorlast() {
-		return authorlast;
-	}
-
-
-	public void setAuthorlast(String authorlast) {
-		this.authorlast = authorlast;
-	}
-
-
-	public List<Work> getWorkIDS() {
-		return workIDS;
-	}
-
-	public void setWorkIDS(List<Work> workIDS) {
-		this.workIDS = workIDS;
-	}
-
-	public Long getAuthorid() {
-		return authorid;
-	}
-
-	public void setAuthorid(Long authorid) {
-		this.authorid = authorid;
 	}
 
 	public String getAuthordisplay() {
@@ -54,22 +40,52 @@ public class Author {
 		this.authordisplay = authordisplay;
 	}
 
-	public String getSpotlight() {
-		return spotlight;
+	public String getAuthorid() {
+		return authorid;
 	}
 
-	public void setSpotlight(String spotlight) {
-		this.spotlight = spotlight;
+	public void setAuthorid(String authorid) {
+		this.authorid = authorid;
 	}
 
-
-	@Override
-	public String toString() {
-		return "Author [authorid=" + authorid + ", authordisplay=" + authordisplay + ", spotlight=" + spotlight
-				+ ", workIDS=" + workIDS + "]";
+	public List<String> getWorks() {
+		return works;
 	}
 
-	
-	
-	
+	public void setWorks(List<String> works) {
+		this.works = works;
+	}
+
+	public int getWorkCount() {
+		return workCount;
+	}
+
+	public void setWorkCount(int workCount) {
+		this.workCount = workCount;
+	}
+
+	public String getDOB() {
+		return DOB;
+	}
+
+	public void setDOB(String dOB) {
+		DOB = dOB;
+	}
+
+	public String getDOD() {
+		return DOD;
+	}
+
+	public void setDOD(String dOD) {
+		DOD = dOD;
+	}
+
+	public String getTopWork() {
+		return topWork;
+	}
+
+	public void setTopWork(String topWork) {
+		this.topWork = topWork;
+	}
+
 }

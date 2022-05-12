@@ -51,7 +51,7 @@ public class TheController {
 
 	// fetch all authors
 	@GetMapping("/author")
-	public ModelAndView FetchAuthor(@RequestParam(name = "authorName") String authorName, ModelAndView mav)
+	public ModelAndView FetchAuthor(@RequestParam(name = "query") String authorName, ModelAndView mav)
 			throws IOException, InterruptedException {
 
 		mav.addObject("Authors", fetchAuthors.fetchAuthors(authorName.trim())).setViewName("index");

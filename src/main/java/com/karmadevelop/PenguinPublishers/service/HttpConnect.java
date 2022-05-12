@@ -24,13 +24,7 @@ public class HttpConnect {
 		// execute the request
 		HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-		if (response.body().toString().contains("<")) {
-
-			// parsing xml to json
-			return XML.toJSONObject(response.body().toString());
-
-		} else
-			return new JSONObject(response.body().toString());
+		return new JSONObject(response.body().toString());
 
 	}
 

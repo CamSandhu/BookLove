@@ -15,24 +15,56 @@ body {
 	opacity: 90%;
 }
 
+#authorDiv .card-header span {
+	font-size: 0.8rem;
+}
+
 #bookDiv {
 	background-color: white;
+}
+
+.navbar .navbar-search .dropdown-menu {
+	min-width: 25px;
+}
+
+.dropdown-menu .label-icon {
+	margin-left: 5px;
+}
+
+.btn-outline {
+	background-color: transparent;
+	color: inherit;
+	transition: all 0.5s;
+}
+
+.center {
+	max-width: 600px;
+	margin: auto;
+}
+
+form {
+	-webkit-flex-basis: 100%;
+	-moz-flex-basis: 100%;
+	-ms-flex-basis: 100%;
+	-o-flex-basis: 100%;
+	flex-basis: -moz-available;
+	flex-basis: 100%;
+}
+
+.input-group-search {
+	width: 100% !important;
 }
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
 	#authorDiv {
-	
 		width: 100%;
 		height: auto;
-
 	}
-	
-	#bookDiv img{
-	   max-width:100%;
+	#bookDiv img {
+		max-width: 100%;
 	}
 }
-
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 /* @media only screen and (min-width: 600px) {...} */
