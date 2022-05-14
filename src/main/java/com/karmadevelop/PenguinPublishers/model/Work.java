@@ -7,108 +7,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Work {
 
-	@JsonProperty
-	private String titleshort;
+	private String title;
 
-	private String titleweb;
-
-	private String onsaledate;
-
-	private String titleSubtitleAuth;
-
-	private String titleAuth;
-
-	// private String titles;
-
-	private String authorweb;
-
-	private String workid;
-
+	private String key;
 
 	public Work() {
 		super();
 	}
 
-	public String getTitleshort() {
-		return titleshort;
+	public String getTitle() {
+		return title;
 	}
 
-	public Work(String titleshort, String titleweb, String onsaledate, String titleSubtitleAuth, String titleAuth,
-			String titles, String uri, String authorweb, String workid) {
-		super();
-		this.titleshort = titleshort;
-		this.titleweb = titleweb;
-		this.onsaledate = onsaledate;
-		this.titleSubtitleAuth = titleSubtitleAuth;
-		this.titleAuth = titleAuth;
-		// this.titles = titles;
-		this.authorweb = authorweb;
-		this.workid = workid;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getTitleAuth() {
-		return titleAuth;
+	public String getKey() {
+		return key;
 	}
 
-	public void setTitleAuth(String titleAuth) {
-		this.titleAuth = titleAuth;
-	}
-
-	/*
-	 * public String getTitles() { return titles; }
-	 * 
-	 * public void setTitles(String titles) { this.titles = titles; }
-	 */
-
-	public void setTitleshort(String titleshort) {
-		this.titleshort = titleshort;
-	}
-
-	public String getTitleweb() {
-		return titleweb;
-	}
-
-	public void setTitleweb(String titleweb) {
-		this.titleweb = titleweb;
-	}
-
-	public String getOnsaledate() {
-		return onsaledate;
-	}
-
-	public void setOnsaledate(String onsaledate) {
-		this.onsaledate = onsaledate;
-	}
-
-	public String getTitleSubtitleAuth() {
-		return titleSubtitleAuth;
-	}
-
-	public void setTitleSubtitleAuth(String titleSubtitleAuth) {
-		this.titleSubtitleAuth = titleSubtitleAuth;
-	}
-
-	public String getAuthorweb() {
-		return authorweb;
-	}
-
-	public void setAuthorweb(String authorweb) {
-		this.authorweb = authorweb;
-	}
-
-	public String getWorkid() {
-		return workid;
-	}
-
-	public void setWorkid(String workid) {
-		this.workid = workid;
-	}
-
-	@Override
-	public String toString() {
-		return "Work [titleshort=" + titleshort + ", titleweb=" + titleweb + ", onsaledate=" + onsaledate
-				+ ", titleSubtitleAuth=" + titleSubtitleAuth + ", titleAuth=" + titleAuth + ", authorweb=" + authorweb
-				+ ", workid=" + workid + "]";
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 }

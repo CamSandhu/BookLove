@@ -1,14 +1,19 @@
 @charset "ISO-8859-1";
 
 body {
-	background-image: url("/images/bigLogo.png");
-	/* The image used */
-	height: 580px; /* You must set a specified height */
-	background-position: center; /* Center the image */
-	background-repeat: no-repeat; /* Do not repeat the image */
-	/* Resize the background image to cover the entire container */
+	/* background-image: url("/images/bigLogo.png");
+	The image used
+	height: 580px; You must set a specified height
+	background-position: center; Center the image
+	background-repeat: no-repeat; Do not repeat the image
+	Resize the background image to cover the entire container
 	z-index: -1;
-	background-attachment: fixed;
+	background-attachment: fixed; */
+	
+}
+
+a {
+	text-decoration: none !important
 }
 
 #bookDiv, #searchDiv, #authorDiv {

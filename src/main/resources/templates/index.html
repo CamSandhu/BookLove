@@ -61,15 +61,24 @@
 		</form>
 
 
-
+		<div
+			class="card mt-3 col-sm-10 offset-sm-1 col-lg-6 offset-lg-3 border border-white">
+			<ul th:each="work: ${works}" th:if="${works!=null}"
+				class="text-center list-unstyled">
+				<li><a th:text="${work.title}"
+					th:href="@{book(key=${work.key})}"></a></li>
+			</ul>
+		</div>
 		<!-- --------------------------------------Authors display------------------------------------------------ -->
 
 		<div th:if="${Author!=null}" id="authorDiv"
 			class="card mt-5 col-sm-10 offset-sm-1 col-lg-6 offset-lg-3   pl-0 pr-0"
 			th:each="Author :${Authors}">
 			<div class="card-header">
-				<h6 th:text="${Author.authordisplay}" class="d-inline-block"></h6>
-				<span th:if="${Author.DOB!=null}" th:text="${Author.DOB}"
+				<a th:text="${Author.authordisplay}"
+					class="d-inline-block font-weight-bold cursor-pointer"
+					th:href="@{works(key=${Author.authorid})}"></a> <span
+					th:if="${Author.DOB!=null}" th:text="${Author.DOB}"
 					class="text-muted"></span> <span th:text="'to '+${Author.DOD}"
 					th:if="${Author.DOD!=null}" class="text-muted"></span>
 
@@ -110,12 +119,6 @@
 	$.noConflict();
 	$(document).ready(function() {
 
-		////////////////////////////////////////////slide functionality////////////////////////////////////////		
-		$(".card-header").click(function() {
-
-			$(".card-body").toggle("slow");
-
-		});
 
 		////////////////////////////////////////////geting value from elect////////////////////////////////////////
 

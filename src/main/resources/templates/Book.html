@@ -66,16 +66,16 @@
 			class="col col-lg-6 offset-lg-3   mt-4 border p-4 rounded ">
 			<div class="row ">
 
-				<div class="col ">
+				<div class="col " th:if="${Book.covers!=null}">
 					<img id="image" class="img-fluid  img-thumbnail"
-						th:src="${Book.photoSource}" />
+						th:src=${"https://covers.openlibrary.org/b/id/"+Book.covers[0]+"-M.jpg"}>
 				</div>
 
 				<div class="col ">
 					<h6 class="mb-0">Title</h6>
-					<p class="text-muted" th:text="${Book.title}?: 'N/A'"></p>
+					<p class="text-muted" th:text="${Book.title}"></p>
 
-					<h6 class="mb-0">Pages</h6>
+					<!-- <h6 class="mb-0">Pages</h6>
 					<p class="text-muted" th:if="${Book.pages!=0}"
 						th:text="${Book.pages}"></p>
 					<p class="text-muted" th:if="${Book.pages==0}" th:text="${'N/A'}"></p>
@@ -97,7 +97,7 @@
 						th:text="${'$'+Book.pricecanada}"></p>
 					<p class="text-muted" th:if="${Book.pricecanada==0}"
 						th:text="${'N/A'}"></p>
-
+ -->
 				</div>
 
 

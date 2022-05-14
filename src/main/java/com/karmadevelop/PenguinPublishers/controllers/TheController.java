@@ -8,6 +8,7 @@ import java.net.http.HttpResponse;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.karmadevelop.PenguinPublishers.service.AllRequests;
+import com.karmadevelop.PenguinPublishers.service.FetchAuthDetails;
 import com.karmadevelop.PenguinPublishers.service.FetchAuthors;
 import com.karmadevelop.PenguinPublishers.service.FetchBook;
 import com.karmadevelop.PenguinPublishers.service.FetchWork;
@@ -30,6 +32,12 @@ public class TheController {
 
 	@Autowired
 	private FetchBook fetchBook;
+
+	@Autowired
+	private FetchWork fetchWorks;
+
+	@Autowired
+	private FetchAuthDetails fetchAuthDetails;
 
 	@RequestMapping("/")
 	public ModelAndView index(ModelAndView mav) {
@@ -60,13 +68,35 @@ public class TheController {
 
 	}
 
-	@GetMapping("/Book")
-	public ModelAndView FetchBookISBN(@RequestParam String workID, ModelAndView mav)
+	@GetMapping("/book")
+	public ModelAndView FetchBookISBN(@RequestParam(name = "key") String workID, ModelAndView mav)
 			throws IOException, InterruptedException {
 
 		mav.addObject("Book", fetchBook.fetchBook(workID)).setViewName("Book");
 
 		return mav;
+
+	}
+
+	@GetMapping("/works")
+	public ModelAndView FetchWorks(@RequestParam(name = "key") String authId, ModelAndView mav)
+			throws IOException, InterruptedException {
+
+		;
+
+		mav.addObject("works", fetchWorks.fetchWork(authId));
+
+		mav.setViewName("index");
+
+		return mav;
+
+	}
+
+	@GetMapping("/authorDetails")
+	public ModelAndView FetchAuthorDetails(@RequestParam(name = "key") String authId, ModelAndView mav)
+			throws IOException, InterruptedException {
+
+		return null;
 
 	}
 

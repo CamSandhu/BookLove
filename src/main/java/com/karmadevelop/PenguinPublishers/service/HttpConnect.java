@@ -23,7 +23,9 @@ public class HttpConnect {
 
 		// execute the request
 		HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
+        
+	    //System.out.println(response.statusCode());
+		
 		return new JSONObject(response.body().toString());
 
 	}

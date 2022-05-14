@@ -1,64 +1,37 @@
 package com.karmadevelop.PenguinPublishers.model;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Book {
 
-	private String isbn;
+	private List<String> subjects;
 
-	@JsonProperty("titleweb")
+	private String description;
+
 	private String title;
 
-	@JsonProperty("uri")
-	private String photoSource;
-
-	@JsonProperty("authorweb")
-	private String authorName;
-
-	private String pages;
-
-	private String workid;
-
-	private int priceusa;
-
-	private int pricecanada;
-
-	public int getPriceusa() {
-		return priceusa;
-	}
-
-	public void setPriceusa(int priceusa) {
-		this.priceusa = priceusa;
-	}
-
-	public int getPricecanada() {
-		return pricecanada;
-	}
-
-	public void setPricecanada(int pricecanada) {
-		this.pricecanada = pricecanada;
-	}
-
-	public String getIsbn() {
-		return isbn;
-	}
+	private List<Integer> covers;
 
 	public Book() {
-		super();
+		
 	}
 
-	public Book(String isbn, String title, String photSource, String authorName, String pages, String workid) {
-		super();
-		this.isbn = isbn;
-		this.title = title;
-		this.photoSource = photSource;
-		this.authorName = authorName;
-		this.pages = pages;
-		this.workid = workid;
+	public List<String> getSubjects() {
+		return subjects;
 	}
 
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
+	public void setSubjects(List<String> subjects) {
+		this.subjects = subjects;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getTitle() {
@@ -69,42 +42,18 @@ public class Book {
 		this.title = title;
 	}
 
-	public String getPhotoSource() {
-		return photoSource;
+	public List<Integer> getCovers() {
+		return covers;
 	}
 
-	public void setPhotoSource(String photSource) {
-		this.photoSource = photSource;
-	}
-
-	public String getAuthorName() {
-		return authorName;
-	}
-
-	public void setAuthorName(String authorName) {
-		this.authorName = authorName;
-	}
-
-	public String getPages() {
-		return pages;
-	}
-
-	public void setPages(String pages) {
-		this.pages = pages;
-	}
-
-	public String getWorkid() {
-		return workid;
-	}
-
-	public void setWorkid(String workid) {
-		this.workid = workid;
+	public void setCovers(List<Integer> covers) {
+		this.covers = covers;
 	}
 
 	@Override
 	public String toString() {
-		return "Book [isbn=" + isbn + ", title=" + title + ", photoSource=" + photoSource + ", authorName=" + authorName
-				+ ", pages=" + pages + ", workid=" + workid + "]";
+		return "Book [subjects=" + subjects + ", description=" + description + ", title=" + title + ", covers=" + covers
+				+ "]";
 	}
 
 }
