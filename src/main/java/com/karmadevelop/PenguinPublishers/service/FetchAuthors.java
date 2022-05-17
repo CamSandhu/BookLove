@@ -27,6 +27,7 @@ import com.karmadevelop.PenguinPublishers.model.Work;
 @Service
 public class FetchAuthors {
 
+	
 
 	@Autowired
 	private HttpConnect connect;
@@ -48,7 +49,7 @@ public class FetchAuthors {
 		String url = "https://openlibrary.org/search/authors.json?q=";
 
 		JSONObject json = connect.Connect(url + authorName);// geting the json
-		
+
 		JSONArray jsonArray = json.getJSONArray("docs");
 
 		/////////////// looping through the array and filling the author list

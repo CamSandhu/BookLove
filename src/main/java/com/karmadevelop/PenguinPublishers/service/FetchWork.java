@@ -6,6 +6,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -23,11 +24,14 @@ import com.karmadevelop.PenguinPublishers.model.Work;
 
 @Service
 public class FetchWork {
+	@Autowired
+	private FetchBook fetchBook;
 
 	@Autowired
 	private HttpConnect connect;
 
-	public List<Work> fetchWork(String authId) throws IOException, InterruptedException {
+	public List<Book> fetchWork(String authId, Integer offset) throws IOException, InterruptedException {
+
 
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -35,7 +39,9 @@ public class FetchWork {
 
 		List<Work> works = new ArrayList();
 
-		JSONObject json = connect.Connect("https://openlibrary.org/authors/" + authId + "/works.json");
+		List<Book> books = new ArrayList();
+
+		JSONObject json = connect.Connect("https://openlibrary.org/authors/" + authId + "/works.json?limit=10&offset="+offset);
 
 		System.out.println(json);
 
@@ -49,11 +55,31 @@ public class FetchWork {
 
 				String[] workId = (works.get(i).getKey().split("/"));
 
-				works.get(i).setKey(workId[2]);
+				books.add(fetchBook.fetchBook(workId[2]));
+
 			}
 		}
 
-		return works;
+		if (json.has("links") && (json.getJSONObject("links")).has("next")) {
+			String next = (json.getJSONObject("links")).getString("next");
+            
+			 String[] offSet=  next.split("\\?");
+			 
+			offSet=offSet[1].split("&");
+			
+			for(String oFFset:offSet) {
+				if((oFFset).contains("offset")) {
+					offset=Integer.parseInt(oFFset.replaceAll("[^0-9]", ""));
+				} 
+				
+			}
+
+		}
+		books.get(books.size() - 1).setOffset(offset);
+		
+		books.get(books.size() - 1).setAuthorId(authId);
+		
+		return books;
 	}
 
 }

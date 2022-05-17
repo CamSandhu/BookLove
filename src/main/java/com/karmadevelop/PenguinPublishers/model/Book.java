@@ -8,14 +8,26 @@ public class Book {
 
 	private List<String> subjects;
 
-	private String description;
+	private String Descrip;
 
 	private String title;
 
 	private List<Integer> covers;
+	
+	private int offset;
+
+	private String authorId;
+
+	public String getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId(String authorId) {
+		this.authorId = authorId;
+	}
 
 	public Book() {
-		
+
 	}
 
 	public List<String> getSubjects() {
@@ -26,12 +38,12 @@ public class Book {
 		this.subjects = subjects;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getDescrip() {
+		return Descrip;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDescrip(String description) {
+		Descrip = description;
 	}
 
 	public String getTitle() {
@@ -50,9 +62,19 @@ public class Book {
 		this.covers = covers;
 	}
 
+	
+	
+	public int getOffset() {
+		return offset;
+	}
+
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+
 	@Override
 	public String toString() {
-		return "Book [subjects=" + subjects + ", description=" + description + ", title=" + title + ", covers=" + covers
+		return "Book [subjects=" + subjects + ", description=" + Descrip + ", title=" + title + ", covers=" + covers
 				+ "]";
 	}
 

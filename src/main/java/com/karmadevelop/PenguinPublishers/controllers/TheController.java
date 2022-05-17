@@ -78,15 +78,13 @@ public class TheController {
 
 	}
 
-	@GetMapping("/works")
-	public ModelAndView FetchWorks(@RequestParam(name = "key") String authId, ModelAndView mav)
-			throws IOException, InterruptedException {
+	@GetMapping("/books")
+	public ModelAndView FetchWorks(@RequestParam(name = "key") String authId, @RequestParam(name = "offset") Integer offset,
+			ModelAndView mav) throws IOException, InterruptedException {
 
-		;
+		mav.addObject("Book", fetchWorks.fetchWork(authId, offset));
 
-		mav.addObject("works", fetchWorks.fetchWork(authId));
-
-		mav.setViewName("index");
+		mav.setViewName("Book");
 
 		return mav;
 

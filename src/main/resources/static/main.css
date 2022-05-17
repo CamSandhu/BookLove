@@ -25,7 +25,13 @@ a {
 }
 
 #bookDiv {
-	background-color: white;
+	background-color: rgb(244, 251, 255);
+	height: 395px;
+	overflow: hidden;
+	box-shadow: rgba(154, 207, 244, 0.4) 0px 0px 12px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: rgb(154, 207, 244);
 }
 
 .navbar .navbar-search .dropdown-menu {

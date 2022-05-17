@@ -42,71 +42,105 @@
 	<div class="container ">
 
 
+		<form th:action="@{/all}"
+			class="form-inline col-sm-10 offset-sm-1 col-lg-6  offset-lg-3 col-sm-11  mt-4  ">
+			<div class="input-group input-group-search ">
+				<div class="input-group-prepend">
 
-		<div
-			class="col col-sm-10 offset-sm-1 col-lg-6  offset-lg-3 col-sm-11  mt-4  "
-			id="searchDiv">
+					<select id="actionSelect" class="border border-grey">
+						<option th:value="title">Title</option>
+						<option th:value="author">Author</option>
+						<option selected th:value="all">All</option>
+					</select>
 
-			<form th:action="@{/author}">
-				<div class="row">
-					<input placeholder="Enter the author name.."
-						class="form-control col col-lg-11" th:name="authorName"></input>
-					<button type="submit" class="btn  bg-transparent d-inline">
-						<i class="fas fa-search"></i>
-					</button>
 				</div>
-			</form>
-
-		</div>
+				<input type="search" class="form-control" placeholder="Search..."
+					aria-label="Search" aria-describedby="search-button-addon"
+					name="query">
+				<div class="input-group-append">
+					<button class="btn btn-danger" type="submit"
+						id="search-button-addon">&#128269;</button>
+				</div>
+			</div>
+		</form>
 
 
 		<!-- --------------------------------------Book info display------------------------------------------------ -->
 
-		<div th:if="${Book!=null}" id="bookDiv"
-			class="col col-lg-6 offset-lg-3   mt-4 border p-4 rounded ">
+		<div th:if="${Book!=null}" th:each="book :${Book}" id="bookDiv"
+			class="offset-lg-3 col-lg-6 mt-4 border p-4 rounded ">
 			<div class="row ">
 
-				<div class="col " th:if="${Book.covers!=null}">
+				<div class="col" th:if="${book.covers!=null}">
+					<img id="image" class="img-fluid  img-thumbnail" width="500"
+						height="600" th:src=${"https://covers.openlibrary.org/b/id/"+book.covers[0]+"-M.jpg"} >
+				</div>
+
+				<div class="col" th:if="${book.covers==null}">
 					<img id="image" class="img-fluid  img-thumbnail"
-						th:src=${"https://covers.openlibrary.org/b/id/"+Book.covers[0]+"-M.jpg"}>
+						th:src="@{images/coverNotAvailable.png}" width="400" height="500">
 				</div>
 
 				<div class="col ">
-					<h6 class="mb-0">Title</h6>
-					<p class="text-muted" th:text="${Book.title}"></p>
 
-					<!-- <h6 class="mb-0">Pages</h6>
-					<p class="text-muted" th:if="${Book.pages!=0}"
-						th:text="${Book.pages}"></p>
-					<p class="text-muted" th:if="${Book.pages==0}" th:text="${'N/A'}"></p>
+					<h6 th:text="${book.title}"></h6>
 
-					<h6 class="mb-0">Author</h6>
-					<p class="text-muted" th:text="${Book.authorName}?: 'N/A'"></p>
+					<div th:each="subject :${book.subjects}">
+						<span class="text-muted d-inline-block" th:text="${subject}">
+						</span>
+					</div>
 
-					<h6 class="mb-0">ISBN</h6>
-					<p class="text-muted" th:text="${Book.isbn}"></p>
 
-					<h6 class="mb-0">Price in USA</h6>
-					<p class="text-muted" th:if="${Book.priceusa!=0}"
-						th:text="${'$'+Book.priceusa}"></p>
-					<p class="text-muted" th:if="${Book.priceusa==0}"
-						th:text="${'N/A'}"></p>
+					<p class="text-muted" th:text="${book.Descrip}"></p>
 
-					<h6 class="mb-0">Price in Canada</h6>
-					<p class="text-muted" th:if="${Book.pricecanada!=0}"
-						th:text="${'$'+Book.pricecanada}"></p>
-					<p class="text-muted" th:if="${Book.pricecanada==0}"
-						th:text="${'N/A'}"></p>
- -->
 				</div>
-
-
 			</div>
+		</div>
+
+		<div class="d-flex justify-content-center">
+			<a th:if="${Book.get(Book.size()-1).offset!=0}"
+				class="btn btn-dark mr-1  mt-1"
+				th:href="@{books(key=${Book.get(Book.size()-1).authorId}, offset=${Book.get(Book.size()-1).offset})}">Next</a>
+
+			<a th:if="${Book.get(Book.size()-1).offset>20}"
+				class="btn btn-dark mt-1"
+				th:href="@{books(key=${Book.get(Book.size()-1).authorId}, offset=${(Book.get(Book.size()-1).offset)-20})}">Previous</a>
+
+			<a th:if="${Book.get(Book.size()-1).offset==20}"
+				class="btn btn-dark mt-1"
+				th:href="@{books(key=${Book.get(Book.size()-1).authorId}, offset=0)}">Previous</a>
+
 		</div>
 
 		<div th:if="${Book==null}"
 			class="alert alert-warning card mt-5 col-sm-10 offset-sm-1 col-lg-6 offset-lg-3 ">Unfortunately
 			we don't have information about this volume</div>
-	</div>
 </body>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+	$.noConflict();
+	$(document).ready(function() {
+
+		////////////////////////////////////////////geting value from elect////////////////////////////////////////
+
+		$(document).on('change', 'select', function() {
+
+			console.log($(this).val()); // the selected options’s value				
+
+			var select = $(this).val();
+			// if you want to do stuff based on the OPTION element:
+			var opt = $(this).find('option:selected')[0];
+
+			$("form").attr('action', '/' + select);
+
+		});
+
+	}
+
+	);
+</script>
+
 </html>

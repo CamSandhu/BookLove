@@ -27,10 +27,11 @@ public class Author {
 
 	@JsonProperty("top_subjects")
 	private List<String> works;
-
+	
 	public Author() {
 		super();
 	}
+
 
 	public String getAuthordisplay() {
 		return authordisplay;

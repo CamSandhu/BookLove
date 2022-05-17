@@ -77,7 +77,7 @@
 			<div class="card-header">
 				<a th:text="${Author.authordisplay}"
 					class="d-inline-block font-weight-bold cursor-pointer"
-					th:href="@{works(key=${Author.authorid})}"></a> <span
+					th:href="@{books(key=${Author.authorid}, offset=0)}"></a> <span
 					th:if="${Author.DOB!=null}" th:text="${Author.DOB}"
 					class="text-muted"></span> <span th:text="'to '+${Author.DOD}"
 					th:if="${Author.DOD!=null}" class="text-muted"></span>
