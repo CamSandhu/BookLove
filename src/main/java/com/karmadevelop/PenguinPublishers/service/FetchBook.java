@@ -39,14 +39,35 @@ public class FetchBook {
 
 		JSONObject json = connect.Connect("https://openlibrary.org/works/" + workID + ".json");
 
+		System.out.println(json);
+
 		book = mapper.readValue(json.toString(), Book.class);
 
 		if (json.has("description")) {
-			book.setDescrip(((JSONObject) json.get("description")).get("value").toString());
+
+			if (json.get("description") instanceof JSONObject) {
+				if (((JSONObject) json.get("description")).get("value").toString().length() > 260) {
+					book.setDescrip(((JSONObject) json.get("description")).get("value").toString().substring(0, 200)
+							.concat("..."));
+				}
+
+				else
+					book.setDescrip(((JSONObject) json.get("description")).get("value").toString().concat("..."));
+			}
+
+			if (json.get("description") instanceof String) {
+				if (json.get("description").toString().length() > 260) {
+					book.setDescrip(json.get("description").toString().substring(0, 200).concat("..."));
+				}
+
+				else
+					book.setDescrip(json.get("description").toString().concat("..."));
+			}
+
 		}
 
-		if (book.getSubjects() != null && book.getSubjects().size() > 6) {
-			book.setSubjects(book.getSubjects().subList(0, 5));
+		if (book.getSubjects() != null && book.getSubjects().size() >= 3) {
+			book.setSubjects(book.getSubjects().subList(0, 3));
 		}
 
 		return book;

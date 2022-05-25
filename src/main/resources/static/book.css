@@ -1,0 +1,54 @@
+@charset "ISO-8859-1";
+
+#bookDiv {
+	height: 350px;
+	overflow: hidden;
+	border-color: #dc3545 !important;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) !important;
+	border-width: 1px;
+	border-style: solid;
+}
+
+#bookDiv p {
+	line-height: 1.3rem !important;
+}
+
+#bookDiv:hover {
+	box-shadow: 0 0 3px #dc3545 !important;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+	#authorDiv {
+		width: 100%;
+	}
+	#bookDiv img {
+		max-width: 100%;
+	}
+	#bookDiv {
+		height: auto;
+	}
+	#bookDiv p {
+		font-size:0.9rem!important;
+	}
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+/* @media only screen and (min-width: 600px) {...} */
+
+/* Medium devices (landscape tablets, 768px and up) */
+/* @media only screen and (max-width: 768px) {
+	.card {
+		color: red;
+		width: 100%;
+		height: auto;
+		display: block !important;
+		flex: none !important;
+	}
+} */
+
+/* Large devices (laptops/desktops, 992px and up) */
+/* @media only screen and (min-width: 992px) {...} */
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+/* @media only screen and (min-width: 1200px) {...} */

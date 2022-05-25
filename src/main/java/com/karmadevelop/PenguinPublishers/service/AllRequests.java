@@ -25,6 +25,7 @@ import javax.annotation.PostConstruct;
 
 import org.apache.catalina.mapper.Mapper;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.json.XML;
@@ -41,39 +42,76 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.karmadevelop.PenguinPublishers.dataValidation.DAtaValidation;
+import com.karmadevelop.PenguinPublishers.model.AuthDetails;
 import com.karmadevelop.PenguinPublishers.model.Author;
 import com.karmadevelop.PenguinPublishers.model.Book;
 import com.karmadevelop.PenguinPublishers.model.Work;
 
 @Service
 public class AllRequests {
+
+	@Autowired
+	private FetchAuthors fetchAuthors;
 	
+	@Autowired
+	private FetchAll fetchAll;
 
-	public String fetchBooks(String keyword) throws IOException, InterruptedException {
+	@Autowired
+	private FetchBook fetchBook;
 
-		String BOOK_TITLE_URL = "https://reststop.randomhouse.com/resources/titles?keyword=" + keyword;
+	@Autowired
+	private FetchWork fetchWorks;
 
-		// String BOOK_TITLE_URL =
-		// "https://reststop.randomhouse.com/resources/titles?start=0&max=4&expandLevel=0&onsaleStart=MM/dd/yyyy&onsaleEnd=MM/dd/yyyy&authorid=0&workid=0&keyword=Grisham%20Christmas";
+	@Autowired
+	private FetchAuthDetails fetchAuthDetails;
 
-		// creating client object
-		HttpClient client = HttpClient.newHttpClient();
+	/*-----------------------------------------Method delegation to fetch authordetails-------------------------------*/
+	public AuthDetails fetchAuthDetails(String authId) throws IOException, InterruptedException {
 
-		// creating an request object
-		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(BOOK_TITLE_URL)).build();
+		return fetchAuthDetails.fetchAuthDetails(authId);
 
-		// executing the request
-		HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-		// HttpResponse response =
-		// client.sendAsync(request,HttpResponse.BodyHandlers.ofString())
+	}
 
-		// getting body from response to string
-		String xml = response.body().toString();
+///////////////
+/////////////
+///////////
+/////////
+///////
+/////
+///
+//
+	/*-----------------------------------------Method delegation to fetch authors-------------------------------*/
+	public List<Author> fetchAuthors(String authorName) throws JSONException, IOException, InterruptedException {
 
-		// converting XML to json
-		JSONObject json = XML.toJSONObject(xml);
+		return fetchAuthors.fetchAuthors(authorName);
+	}
 
-		return json.toString();
+///////////////                                                                        
+/////////////
+///////////
+/////////
+///////
+/////
+///
+//
+	/*-----------------------------------------Method delegation to fetch Works/books-------------------------------*/
+	public List<Book> fetchWork(String authId, Integer offset) throws IOException, InterruptedException {
+
+		return fetchWorks.fetchWork(authId, offset);
+	}
+
+///////////////                                                                        
+/////////////
+///////////
+/////////
+///////
+/////
+///
+//
+	/*-----------------------------------------Method delegation to fetch all Subjects-------------------------------*/
+	public List<Book> fetchAll(String title ,Integer offset) throws IOException, InterruptedException {
+
+		return fetchAll.fetchAll(title, offset);
 	}
 
 }

@@ -11,7 +11,7 @@ import com.karmadevelop.PenguinPublishers.model.AuthDetails;
 
 @Service
 public class FetchAuthDetails {
-	
+		
 	@Autowired
 	private HttpConnect connect;
 

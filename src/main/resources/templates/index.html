@@ -38,21 +38,20 @@
 	<div class="container ">
 
 
-		<form th:action="@{/all}"
+		<form th:action="@{/title}"
 			class="form-inline col-sm-10 offset-sm-1 col-lg-6  offset-lg-3 col-sm-11  mt-4  ">
 			<div class="input-group input-group-search ">
-				<div class="input-group-prepend">
+				<div class="input-group-prepend ">
 
 					<select id="actionSelect" class="border border-grey">
-						<option th:value="title">Title</option>
+						<option th:value="title" selected>Title</option>
 						<option th:value="author">Author</option>
-						<option selected th:value="all">All</option>
 					</select>
 
 				</div>
 				<input type="search" class="form-control" placeholder="Search..."
 					aria-label="Search" aria-describedby="search-button-addon"
-					name="query">
+					name="query" required>
 				<div class="input-group-append">
 					<button class="btn btn-danger" type="submit"
 						id="search-button-addon">&#128269;</button>
@@ -61,29 +60,73 @@
 		</form>
 
 
-		<div
+		<!-- --------------------------------------------------SUBJECTS------------------------------------------------------------ -->
+
+		<div id="subjects" th:if="${Authors==null}"
+			class="col-sm-10 offset-sm-1 col-lg-6 offset-lg-3
+			col-sm-11 mt-4 text-center">
+			<form th:action="@{title}">
+				<input class="btn btn-light br-50 mr-3 mt-3" type="submit"
+					value="Action" th:name="query" /> <input
+					class="btn btn-light br-50 mr-3 mt-3" type="submit"
+					value="Thriller" th:name="query" /> <input
+					class="btn btn-light br-50 mr-3 mt-3" type="submit" value="Drama"
+					th:name="query" /> <input class="btn btn-light br-50 mr-3 mt-3"
+					type="submit" value="Crime" th:name="query" /> <input
+					class="btn btn-light br-50 mr-3 mt-3" type="submit" value="Comic"
+					th:name="query" />
+
+				<hr>
+
+				<input class="btn btn-light br-50 mr-3 mt-3" type="submit"
+					value="Food" th:name="query" /> <input
+					class="btn btn-light br-50 mr-3 mt-3" type="submit" value="Travel"
+					th:name="query" /> <input class="btn btn-light br-50 mr-3 mt-3"
+					type="submit" value="Health" th:name="query" /> <input
+					class="btn btn-light br-50 mr-3 mt-3" type="submit" value="Yoga"
+					th:name="query" /> <input class="btn btn-light br-50 mr-3 mt-3"
+					type="submit" value="Nature" th:name="query" /> <input
+					class="btn btn-light br-50 mr-3 mt-3" type="submit" value="Life"
+					th:name="query" />
+				<hr>
+				
+				<input class="btn btn-light br-50 mr-3 mt-3" type="submit"
+					value="Sports" th:name="query" /> <input
+					class="btn btn-light br-50 mr-3 mt-3" type="submit" value="Cycling"
+					th:name="query" /> <input class="btn btn-light br-50 mr-3 mt-3"
+					type="submit" value="Olympics" th:name="query" /> <input
+					class="btn btn-light br-50 mr-3 mt-3" type="submit" value="Running"
+					th:name="query" /> <input class="btn btn-light br-50 mr-3 mt-3"
+					type="submit" value="Decatlon" th:name="query" /> <input
+					class="btn btn-light br-50 mr-3 mt-3" type="submit" value="Life"
+					th:name="query" />
+				<hr>
+			</form>
+		</div>
+
+		<!-- <div
 			class="card mt-3 col-sm-10 offset-sm-1 col-lg-6 offset-lg-3 border border-white">
 			<ul th:each="work: ${works}" th:if="${works!=null}"
 				class="text-center list-unstyled">
 				<li><a th:text="${work.title}"
 					th:href="@{book(key=${work.key})}"></a></li>
 			</ul>
-		</div>
+		</div> -->
 		<!-- --------------------------------------Authors display------------------------------------------------ -->
 
-		<div th:if="${Author!=null}" id="authorDiv"
+		<div th:if="${Authors!=null}" id="authorDiv"
 			class="card mt-5 col-sm-10 offset-sm-1 col-lg-6 offset-lg-3   pl-0 pr-0"
 			th:each="Author :${Authors}">
 			<div class="card-header">
 				<a th:text="${Author.authordisplay}"
-					class="d-inline-block font-weight-bold cursor-pointer"
+					class="d-inline-block font-weight-bold cursor-pointer "
 					th:href="@{books(key=${Author.authorid}, offset=0)}"></a> <span
 					th:if="${Author.DOB!=null}" th:text="${Author.DOB}"
 					class="text-muted"></span> <span th:text="'to '+${Author.DOD}"
 					th:if="${Author.DOD!=null}" class="text-muted"></span>
 
 			</div>
-			<div class="card-body ">
+			<div class="card-body" th:if="${Author.topWork!=null}">
 				<div th:if="${Author.workCount>1}">
 					<span th:text="${Author.workCount}+' books about ' "></span> <span
 						class="text-muted" th:each="work: ${Author.works}"
@@ -99,12 +142,14 @@
 				</div>
 			</div>
 
+			<div class="card-body" th:if="${Author.topWork==null}">
+
+				<p class="text-danger">Sorry, we don't have much information
+					about the author</p>
+			</div>
+
 
 		</div>
-
-		<div th:if="${Authors==null}"
-			class="alert alert-warning card mt-5 col-sm-10 offset-sm-1 col-lg-6 offset-lg-3 ">Unfortunately
-			we don't have information about this author</div>
 
 	</div>
 
@@ -113,31 +158,7 @@
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<!-- <script th:src="@{javaScript.js}" type="text/javascript" /> -->
 
-<script type="text/javascript">
-	$.noConflict();
-	$(document).ready(function() {
-
-
-		////////////////////////////////////////////geting value from elect////////////////////////////////////////
-
-		$(document).on('change', 'select', function() {
-
-			console.log($(this).val()); // the selected options’s value				
-
-			var select = $(this).val();
-			// if you want to do stuff based on the OPTION element:
-			var opt = $(this).find('option:selected')[0];
-
-			$("form").attr('action', '/' + select);
-
-		});
-
-	}
-
-	);
-</script>
-
+<script type="text/javascript" th:src="@{javaScript.js}"></script>
 
 </html>

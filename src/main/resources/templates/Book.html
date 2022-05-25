@@ -56,7 +56,7 @@
 				</div>
 				<input type="search" class="form-control" placeholder="Search..."
 					aria-label="Search" aria-describedby="search-button-addon"
-					name="query">
+					name="query" required>
 				<div class="input-group-append">
 					<button class="btn btn-danger" type="submit"
 						id="search-button-addon">&#128269;</button>
@@ -65,52 +65,65 @@
 		</form>
 
 
-		<!-- --------------------------------------Book info display------------------------------------------------ -->
+		<!-- --------------------------------------Book info display fetched from author name------------------------------------------------ -->
 
 		<div th:if="${Book!=null}" th:each="book :${Book}" id="bookDiv"
-			class="offset-lg-3 col-lg-6 mt-4 border p-4 rounded ">
+			class="offset-lg-3 col-lg-6 mt-4 border p-4 rounded mb-5 ">
 			<div class="row ">
 
 				<div class="col" th:if="${book.covers!=null}">
-					<img id="image" class="img-fluid  img-thumbnail" width="500"
-						height="600" th:src=${"https://covers.openlibrary.org/b/id/"+book.covers[0]+"-M.jpg"} >
+					<img id="image" class="img-fluid  img-thumbnail" th:src=${"https://covers.openlibrary.org/b/id/"+book.covers[0]+"-M.jpg"} >
 				</div>
 
 				<div class="col" th:if="${book.covers==null}">
 					<img id="image" class="img-fluid  img-thumbnail"
-						th:src="@{images/coverNotAvailable.png}" width="400" height="500">
+						th:src="@{images/coverNotAvailable.png}">
 				</div>
 
 				<div class="col ">
 
-					<h6 th:text="${book.title}"></h6>
+					<h6 th:text="${book.title}" class="p-0 m-0"></h6>
 
 					<div th:each="subject :${book.subjects}">
-						<span class="text-muted d-inline-block" th:text="${subject}">
-						</span>
+						<small class="text-muted d-inline" th:text="${subject}"> </small>
 					</div>
+					<hr>
 
-
-					<p class="text-muted" th:text="${book.Descrip}"></p>
-
+					<p class="text-muted text-justify " th:text="${book.Descrip}"></p>
+					<small th:if="${book.revision>1}" class="text-muted"
+						th:text="${book.revision}+' revisions'"></small> <small
+						class="text-muted" th:if="${book.revision==1}"
+						th:text="${book.revision}+' revision'"></small>
 				</div>
 			</div>
 		</div>
 
-		<div class="d-flex justify-content-center">
+		<div class="d-flex justify-content-center" th:if="${Book!=null && Book.get(Book.size()-1).query==null}">
 			<a th:if="${Book.get(Book.size()-1).offset!=0}"
-				class="btn btn-dark mr-1  mt-1"
+				class="btn  mr-1  mt-1"
 				th:href="@{books(key=${Book.get(Book.size()-1).authorId}, offset=${Book.get(Book.size()-1).offset})}">Next</a>
 
-			<a th:if="${Book.get(Book.size()-1).offset>20}"
-				class="btn btn-dark mt-1"
+			<a th:if="${Book.get(Book.size()-1).offset>20}" class="btn  mt-1"
 				th:href="@{books(key=${Book.get(Book.size()-1).authorId}, offset=${(Book.get(Book.size()-1).offset)-20})}">Previous</a>
 
-			<a th:if="${Book.get(Book.size()-1).offset==20}"
-				class="btn btn-dark mt-1"
+			<a th:if="${Book.get(Book.size()-1).offset==20}" class="btn  mt-1"
 				th:href="@{books(key=${Book.get(Book.size()-1).authorId}, offset=0)}">Previous</a>
 
 		</div>
+
+
+		<div class="d-flex justify-content-center"
+			th:if="${Book.get(Book.size()-1).query!=null}">
+			<a th:if="${Book.get(Book.size()-1).offset!=0}"
+				class="btn  mr-1  mt-1"
+				th:href="@{title(query=${Book.get(Book.size()-1).query}, offset=${Book.get(Book.size()-1).offset})}">Next</a>
+
+			<a th:if="${Book.get(Book.size()-1).offset>10}" class="btn  mt-1"
+				th:href="@{title(query=${Book.get(Book.size()-1).query}, offset=${(Book.get(Book.size()-1).offset)}-20)}">Previous</a>
+
+		</div>
+
+
 
 		<div th:if="${Book==null}"
 			class="alert alert-warning card mt-5 col-sm-10 offset-sm-1 col-lg-6 offset-lg-3 ">Unfortunately
@@ -120,27 +133,6 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<script type="text/javascript">
-	$.noConflict();
-	$(document).ready(function() {
-
-		////////////////////////////////////////////geting value from elect////////////////////////////////////////
-
-		$(document).on('change', 'select', function() {
-
-			console.log($(this).val()); // the selected options’s value				
-
-			var select = $(this).val();
-			// if you want to do stuff based on the OPTION element:
-			var opt = $(this).find('option:selected')[0];
-
-			$("form").attr('action', '/' + select);
-
-		});
-
-	}
-
-	);
-</script>
+<script type="text/javascript" th:src="@{javaScript.js}"></script>
 
 </html>

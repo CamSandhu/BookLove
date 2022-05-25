@@ -1,0 +1,18 @@
+@charset "ISO-8859-1";
+
+#authorDiv .card-header span {
+	font-size: 0.8rem;
+}
+
+#authorDiv .card-header, #authorDiv .card-body, #authorDiv {
+	border-color: #dc3545 !important;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) !important;
+}
+
+#authorDiv a {
+	color: #dc3545 !important;
+}
+
+.btn-danger:click {
+	border: none !important;
+}

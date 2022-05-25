@@ -28,16 +28,10 @@ import com.karmadevelop.PenguinPublishers.service.FetchWork;
 public class TheController {
 
 	@Autowired
-	private FetchAuthors fetchAuthors;
+	AllRequests allRequests;
 
 	@Autowired
-	private FetchBook fetchBook;
-
-	@Autowired
-	private FetchWork fetchWorks;
-
-	@Autowired
-	private FetchAuthDetails fetchAuthDetails;
+	FetchBook fetchBook;
 
 	@RequestMapping("/")
 	public ModelAndView index(ModelAndView mav) {
@@ -62,7 +56,22 @@ public class TheController {
 	public ModelAndView FetchAuthor(@RequestParam(name = "query") String authorName, ModelAndView mav)
 			throws IOException, InterruptedException {
 
-		mav.addObject("Authors", fetchAuthors.fetchAuthors(authorName.trim())).setViewName("index");
+		mav.addObject("Authors", allRequests.fetchAuthors(authorName.trim())).setViewName("index");
+
+		return mav;
+
+	}
+
+	@GetMapping("/title")
+	public ModelAndView FetchAll(@RequestParam(name = "query") String title,
+			@RequestParam(name = "offset", required = false) Integer offset, ModelAndView mav)
+			throws IOException, InterruptedException {
+
+		if (offset == null)
+			offset =0;
+
+
+		mav.addObject("Book", allRequests.fetchAll(title.trim(), offset)).setViewName("Book");
 
 		return mav;
 
@@ -79,10 +88,10 @@ public class TheController {
 	}
 
 	@GetMapping("/books")
-	public ModelAndView FetchWorks(@RequestParam(name = "key") String authId, @RequestParam(name = "offset") Integer offset,
-			ModelAndView mav) throws IOException, InterruptedException {
+	public ModelAndView FetchWorks(@RequestParam(name = "key") String authId,
+			@RequestParam(name = "offset") Integer offset, ModelAndView mav) throws IOException, InterruptedException {
 
-		mav.addObject("Book", fetchWorks.fetchWork(authId, offset));
+		mav.addObject("Book", allRequests.fetchWork(authId, offset));
 
 		mav.setViewName("Book");
 

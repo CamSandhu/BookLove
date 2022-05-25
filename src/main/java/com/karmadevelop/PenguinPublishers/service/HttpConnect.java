@@ -9,7 +9,9 @@ import java.net.http.HttpResponse;
 import org.apache.tomcat.util.json.JSONParser;
 import org.json.JSONObject;
 import org.json.XML;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 
 @Component
 public class HttpConnect {
@@ -23,9 +25,7 @@ public class HttpConnect {
 
 		// execute the request
 		HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        
-	    //System.out.println(response.statusCode());
-		
+
 		return new JSONObject(response.body().toString());
 
 	}

@@ -1,5 +1,8 @@
 @charset "ISO-8859-1";
 
+@import "book.css";
+@import "author.css";
+
 body {
 	/* background-image: url("/images/bigLogo.png");
 	The image used
@@ -12,27 +15,19 @@ body {
 	
 }
 
-a {
-	text-decoration: none !important
+.form-control:focus, select:focus {
+	border-color: #dc3545 !important;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) !important;
 }
 
-#bookDiv, #searchDiv, #authorDiv {
-	opacity: 90%;
+#subjects a:hover {
+	border-color: #dc3545 !important;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) !important;
+	background: white;
+	color: #dc3545;
 }
 
-#authorDiv .card-header span {
-	font-size: 0.8rem;
-}
 
-#bookDiv {
-	background-color: rgb(244, 251, 255);
-	height: 395px;
-	overflow: hidden;
-	box-shadow: rgba(154, 207, 244, 0.4) 0px 0px 12px;
-	border-width: 1px;
-	border-style: solid;
-	border-color: rgb(154, 207, 244);
-}
 
 .navbar .navbar-search .dropdown-menu {
 	min-width: 25px;
@@ -67,15 +62,8 @@ form {
 }
 
 /* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-	#authorDiv {
-		width: 100%;
-		height: auto;
-	}
-	#bookDiv img {
-		max-width: 100%;
-	}
-}
+/* @media only screen and (max-width: 600px) {
+} */
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 /* @media only screen and (min-width: 600px) {...} */
