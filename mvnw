@@ -23,7 +23,7 @@
 #
 # Required ENV vars:
 # ------------------
-#   JAVA_HOME - location of a JDK home dir
+#   JAVA_HOME - C:\path\to\jdk11
 #
 # Optional ENV vars
 # -----------------
