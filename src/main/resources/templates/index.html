@@ -89,7 +89,7 @@
 					class="btn btn-light br-50 mr-3 mt-3" type="submit" value="Life"
 					th:name="query" />
 				<hr>
-				
+
 				<input class="btn btn-light br-50 mr-3 mt-3" type="submit"
 					value="Sports" th:name="query" /> <input
 					class="btn btn-light br-50 mr-3 mt-3" type="submit" value="Cycling"
@@ -117,6 +117,8 @@
 		<div th:if="${Authors!=null}" id="authorDiv"
 			class="card mt-5 col-sm-10 offset-sm-1 col-lg-6 offset-lg-3   pl-0 pr-0"
 			th:each="Author :${Authors}">
+
+
 			<div class="card-header">
 				<a th:text="${Author.authordisplay}"
 					class="d-inline-block font-weight-bold cursor-pointer "
@@ -125,8 +127,12 @@
 					class="text-muted"></span> <span th:text="'to '+${Author.DOD}"
 					th:if="${Author.DOD!=null}" class="text-muted"></span>
 
+
 			</div>
+
+
 			<div class="card-body" th:if="${Author.topWork!=null}">
+				<img class="float-left" th:src=${"https://covers.openlibrary.org/a/olid/"+Author.authorid+"-M.jpg"} alt="">
 				<div th:if="${Author.workCount>1}">
 					<span th:text="${Author.workCount}+' books about ' "></span> <span
 						class="text-muted" th:each="work: ${Author.works}"

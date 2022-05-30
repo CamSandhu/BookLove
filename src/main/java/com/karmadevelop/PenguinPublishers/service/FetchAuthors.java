@@ -27,8 +27,6 @@ import com.karmadevelop.PenguinPublishers.model.Work;
 @Service
 public class FetchAuthors {
 
-	
-
 	@Autowired
 	private HttpConnect connect;
 
@@ -52,6 +50,8 @@ public class FetchAuthors {
 
 		JSONArray jsonArray = json.getJSONArray("docs");
 
+		System.out.println(jsonArray);
+		
 		/////////////// looping through the array and filling the author list
 		for (int i = 0; i < jsonArray.length(); i++) {
 
