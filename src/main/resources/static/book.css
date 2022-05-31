@@ -3,10 +3,11 @@
 #bookDiv {
 	height: 350px;
 	overflow: hidden;
-	border-color: #dc3545 !important;
+	border-color: #f44d27 !important;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) !important;
 	border-width: 1px;
 	border-style: solid;
+	background-color: #fcfcfa;
 }
 
 #bookDiv p {
@@ -14,7 +15,7 @@
 }
 
 #bookDiv:hover {
-	box-shadow: 0 0 3px #dc3545 !important;
+	box-shadow: 0 0 3px #f44d27 !important;
 }
 
 /* Extra small devices (phones, 600px and down) */

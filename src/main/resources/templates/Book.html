@@ -40,10 +40,10 @@
 <body>
 
 	<div class="container ">
+		<h4 id="AppName" class="text-center">Book-Dig</h4>
 
-
-		<form th:action="@{/all}"
-			class="form-inline col-sm-10 offset-sm-1 col-lg-6  offset-lg-3 col-sm-11  mt-4  ">
+		<form th:action="@{/title}"
+			class="form-inline col-sm-10 offset-sm-1 col-lg-6  offset-lg-3 col-sm-11  mt-4  sticky-top">
 			<div class="input-group input-group-search ">
 				<div class="input-group-prepend">
 
@@ -97,7 +97,8 @@
 			</div>
 		</div>
 
-		<div class="d-flex justify-content-center" th:if="${Book!=null && Book.get(Book.size()-1).query==null}">
+		<div class="d-flex justify-content-center"
+			th:if="${Book!=null && Book.get(Book.size()-1).query==null}">
 			<a th:if="${Book.get(Book.size()-1).offset!=0}"
 				class="btn  mr-1  mt-1"
 				th:href="@{books(key=${Book.get(Book.size()-1).authorId}, offset=${Book.get(Book.size()-1).offset})}">Next</a>

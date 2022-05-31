@@ -5,14 +5,18 @@
 }
 
 #authorDiv .card-header, #authorDiv .card-body, #authorDiv {
-	border-color: #dc3545 !important;
+	border-color: #f44d27 !important;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) !important;
 }
 
 #authorDiv a {
-	color: #dc3545 !important;
+	color: #f44d27 !important;
 }
 
 .btn-danger:click {
 	border: none !important;
+}
+
+#authorDiv{
+	background-color: #fcfcfa;
 }

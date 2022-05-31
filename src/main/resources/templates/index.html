@@ -36,10 +36,10 @@
 <body>
 
 	<div class="container ">
-
+		<h4 id="AppName" class="text-center ">Book-Dig</h4>
 
 		<form th:action="@{/title}"
-			class="form-inline col-sm-10 offset-sm-1 col-lg-6  offset-lg-3 col-sm-11  mt-4  ">
+			class="form-inline col-sm-10 offset-sm-1 col-lg-6  offset-lg-3 col-sm-11  mt-4 sticky-top ">
 			<div class="input-group input-group-search ">
 				<div class="input-group-prepend ">
 
@@ -132,7 +132,8 @@
 
 
 			<div class="card-body" th:if="${Author.topWork!=null}">
-				<img class="float-left" th:src=${"https://covers.openlibrary.org/a/olid/"+Author.authorid+"-M.jpg"} alt="">
+				<img class="float-left" th:src=${
+					"https://covers.openlibrary.org/a/olid/"+Author.authorid+"-M.jpg"} alt="">
 				<div th:if="${Author.workCount>1}">
 					<span th:text="${Author.workCount}+' books about ' "></span> <span
 						class="text-muted" th:each="work: ${Author.works}"

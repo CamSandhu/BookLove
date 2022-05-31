@@ -12,19 +12,24 @@ body {
 	Resize the background image to cover the entire container
 	z-index: -1;
 	background-attachment: fixed; */
+	background-color: #efefe7;
 	
 }
 
+#AppName{
+	color: #413932;
+}
+
 .form-control:focus, select:focus {
-	border-color: #dc3545 !important;
+	border-color: #f44d27 !important;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) !important;
 }
 
 #subjects a:hover {
-	border-color: #dc3545 !important;
+	border-color: #f44d27 !important;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) !important;
 	background: white;
-	color: #dc3545;
+	color: #f44d27;
 }
 
 
