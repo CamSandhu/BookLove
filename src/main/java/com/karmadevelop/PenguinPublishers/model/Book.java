@@ -9,7 +9,7 @@ public class Book {
 
 	@JsonAlias("subject")
 	private List<String> subjects;
-
+	
 	private String Descrip;
 	
 	private String query;

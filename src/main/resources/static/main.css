@@ -1,6 +1,7 @@
 @charset "ISO-8859-1";
 
 @import "book.css";
+
 @import "author.css";
 
 body {
@@ -13,16 +14,16 @@ body {
 	z-index: -1;
 	background-attachment: fixed; */
 	background-color: #efefe7;
-	
 }
 
-#AppName{
+#AppName {
 	color: #413932;
+	font-size: 2rem;
+	text-decoration: none;
 }
 
-.form-control:focus, select:focus {
-	border-color: #f44d27 !important;
-	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) !important;
+#search {
+	border-left: 1px solid grey !important;
 }
 
 #subjects a:hover {
@@ -31,8 +32,6 @@ body {
 	background: white;
 	color: #f44d27;
 }
-
-
 
 .navbar .navbar-search .dropdown-menu {
 	min-width: 25px;
@@ -64,8 +63,16 @@ form {
 
 .input-group-search {
 	width: 100% !important;
+	border-bottom: 1px solid grey !important;
+	border-right: 1px solid grey !important;
+	border-top: 1px solid grey !important;
+	border-left: 1px solid grey !important;
 }
 
+#search-button-addon {
+	background-color: white;
+	border-left: 1px solid grey !important;
+}
 /* Extra small devices (phones, 600px and down) */
 /* @media only screen and (max-width: 600px) {
 } */
